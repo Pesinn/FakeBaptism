@@ -14,6 +14,7 @@ public class FinishLevel : MonoBehaviour {
     {
         StartCoroutine(hideAllUnPickedLetterDelay(.3f));
         StartCoroutine(fireworksDelay(1f));
+        StartCoroutine(changeLevel(2f));
     }
 
     private IEnumerator hideAllUnPickedLetterDelay(float sec)
@@ -26,5 +27,11 @@ public class FinishLevel : MonoBehaviour {
     {
         yield return new WaitForSeconds(sec);
         Debug.LogWarning("ROCKETS");
+    }
+
+    private IEnumerator changeLevel(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        Application.LoadLevel(1);
     }
 }

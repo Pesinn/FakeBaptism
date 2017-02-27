@@ -20,12 +20,12 @@ public class LettersContainer
 
         _containerStatus = new Result();
 
-        _correctLetters.Add("P");
-/*        _correctLetters.Add("E");
-        _correctLetters.Add("S");
-        _correctLetters.Add("I");
-        _correctLetters.Add("N");
-        _correctLetters.Add("N");*/
+        _correctLetters.Add("H");
+        _correctLetters.Add("A");
+        _correctLetters.Add("L");
+        _correctLetters.Add("L");
+        _correctLetters.Add("U");
+        _correctLetters.Add("R");
     }
 
     public List<string> GetChoosenLetters()
@@ -73,8 +73,8 @@ public class LettersContainer
         if (isCorrectName())
             _containerStatus.isCorrectName = true;
 
-        //GetListAsString("_correctChoosenLetters", _correctChoosenLetters);
-        //GetListAsString("_choosenLetters", _choosenLetters);
+        // GetListAsString("_correctChoosenLetters", _correctChoosenLetters);
+        // GetListAsString("_choosenLetters", _choosenLetters);
 
         return _containerStatus;
     }
@@ -111,8 +111,8 @@ public class LettersContainer
             _containerStatus.InnerText = "You cannot unpick a letter that hasn't been picked";
         }
 
-        //        GetListAsString("_correctChoosenLetters", _correctChoosenLetters);
-        //        GetListAsString("_choosenLetters", _choosenLetters);
+        // GetListAsString("_correctChoosenLetters", _correctChoosenLetters);
+        // GetListAsString("_choosenLetters", _choosenLetters);
 
         return _containerStatus;
     }
@@ -183,10 +183,10 @@ public class LettersContainer
         List<string> correctChoosenLetters = _correctChoosenLetters;
         List<string> correctLetters = _correctLetters;
 
-        correctChoosenLetters.OrderBy(x => x);
-        correctLetters.OrderBy(x => x);
-        
-        return correctChoosenLetters.SequenceEqual(correctLetters);
+        var correctChoosenOrdered = correctChoosenLetters.OrderBy(x => x).ToList();
+        var correctOrdered = correctLetters.OrderBy(x => x).ToList();
+
+        return correctChoosenOrdered.SequenceEqual(correctOrdered);
     }
 
     private int countNumberOfLetterInList(List<string> list, string letter)

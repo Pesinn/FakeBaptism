@@ -56,6 +56,7 @@ public class LettersContainer
 
         setLetter(letter);
 
+        _containerStatus.Action = "PICK";
         // User cannot pick higher number of letters than
         // the name represents
         if (_choosenLetters.Count < _correctLetters.Count)
@@ -100,6 +101,8 @@ public class LettersContainer
         resetResult();
         setLetter(letter);
 
+        _containerStatus.Action = "UNPICK";
+
         if (_choosenLetters.Contains(letter))
         {
             _choosenLetters.Remove(letter);
@@ -119,6 +122,8 @@ public class LettersContainer
 
     private void processCorrectLetter(string letter)
     {
+        _containerStatus.isCorrectLetter = true;
+
         if (_correctChoosenLetters.Count <= _correctLetters.Count)
         {
             if (!isLetterCap(letter))
@@ -138,6 +143,7 @@ public class LettersContainer
 
     private void processWrongLetter(string letter)
     {
+        _containerStatus.isCorrectLetter = false;
         _containerStatus.Status = 0;
         _containerStatus.isTriggeredLetter = false;
         _containerStatus.InnerText = "Wrong letter";
@@ -145,9 +151,11 @@ public class LettersContainer
 
     private void resetResult()
     {
+        _containerStatus.Action = "";
         _containerStatus.Status = 0;
         _containerStatus.Text = "";
         _containerStatus.Letter = "";
+        _containerStatus.isCorrectLetter = false;
         _containerStatus.isTriggeredLetter = false;
         _containerStatus.InnerText = "";
         _containerStatus.isCorrectName = false;

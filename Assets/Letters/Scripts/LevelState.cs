@@ -23,7 +23,7 @@ public class LevelState : MonoBehaviour {
         {
             if (result.isCorrectName)
                 _finishLevel.TriggerFinishLevel();
-            else if (result.isTriggeredLetter)
+            else if (result.isTriggeredLetter && result.Action == "PICK" && result.isCorrectLetter)
                 StartCoroutine(swapTrigger(.2f));
         }
     }

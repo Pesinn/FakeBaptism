@@ -33,27 +33,29 @@ public class LetterButton : MonoBehaviour {
 
     private void onClickEvent()
     {
-        if(myButton != null && _imageController.GetLetterState() != 1)
+        // Prevent picket correct letters to be 
+        if (myButton != null && _imageController.GetLetterState() != 1)
+            processAction(0, true);
+    }
+
+    private Result processLetterTouched()
+    {
+        var result = letterTouched();
+        if (result.Status == 0)
         {
-            var result = letterTouched();
-
-//            Debug.Log("InnerText: " + result.InnerText);
-//            Debug.Log("TriggerLetter: " + result.TriggerLetter);
-//            Debug.Log("Letter: " + result.Letter);
-//            Debug.Log("Status: " + result.Status);
-//            Debug.Log("Text: " + result.Text);
-
-            // If Status is not null then this letter
-            // isn't triggered, so we must reverse the
-            // trigger again
-            if (result.Status == 0)
-            {
-                reverseTrigger();
-            }
-
-            changeObjectState(result);
-            triggerLevelState(result);
+            reverseTrigger();
         }
+        return result;
+    }
+
+    private void processAction(float delayTimer, bool pick)
+    {
+        var result = processLetterTouched();
+
+        StartCoroutine(unPickLetterWithDelay(delayTimer, result));
+
+        if (!result.isTriggeredLetter && pick)
+            processAction(2, false);
     }
 
     private Result letterTouched()
@@ -71,10 +73,18 @@ public class LetterButton : MonoBehaviour {
         return _letterClickDetector.LetterAction(letterAction);
     }
 
+    private IEnumerator unPickLetterWithDelay(float sec, Result res)
+    {
+        yield return new WaitForSeconds(sec);
+        changeObjectState(res);
+        triggerLevelState(res);
+    }
+
     private void changeObjectState(Result result)
     {
         if (result.Status == 0)
         {
+            Debug.Log("change state");
             _imageController.ChangeState(result);
         }
     }
@@ -87,6 +97,11 @@ public class LetterButton : MonoBehaviour {
     private void triggerLevelState(Result result)
     {
         _levelState.TriggerChanges(result);
+    }
+
+    private void setTrigger(bool set)
+    {
+        isTriggered = set;
     }
 
     private void reverseTrigger()

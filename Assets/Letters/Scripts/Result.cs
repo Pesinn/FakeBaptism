@@ -20,6 +20,10 @@ public class Result
     // Letter that was choosen/picked
     public string Letter { get; set; }
 
+    public bool isCorrectLetter { get; set; }
+
+    public string Action { get; set; }
+
     // true if the letter should be marked
     public bool isTriggeredLetter { get; set; }
 

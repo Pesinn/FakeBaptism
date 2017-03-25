@@ -20,12 +20,14 @@ public class LettersContainer
 
         _containerStatus = new Result();
 
-        _correctLetters.Add("H");
         _correctLetters.Add("A");
-        _correctLetters.Add("L");
-        _correctLetters.Add("L");
-        _correctLetters.Add("U");
         _correctLetters.Add("R");
+        _correctLetters.Add("I");
+    }
+
+    public List<string> GetCorrectName()
+    {
+        return _correctLetters;
     }
 
     public List<string> GetChoosenLetters()

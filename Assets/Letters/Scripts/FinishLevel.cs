@@ -26,7 +26,6 @@ public class FinishLevel : MonoBehaviour {
     private IEnumerator fireworksDelay(float sec)
     {
         yield return new WaitForSeconds(sec);
-        Debug.LogWarning("ROCKETS");
     }
 
     private IEnumerator changeLevel(float sec)

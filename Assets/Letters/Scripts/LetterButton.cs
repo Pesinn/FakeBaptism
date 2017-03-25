@@ -33,11 +33,31 @@ public class LetterButton : MonoBehaviour {
 
     private void onClickEvent()
     {
-        // Prevent picket correct letters to be 
+        // Prevent correct letters that have been picket to be changed
         if (myButton != null && _imageController.GetLetterState() != 1)
             processAction(0, true);
     }
+    
+    /// <summary>
+    /// Process action for current letter.
+    /// </summary>
+    /// <param name="delayTimer">Delay until action is processed</param>
+    /// <param name="pick">True if current letter should be picked
+    ///     false if it should be unpicked </param>
+    private void processAction(float delayTimer, bool pick)
+    {
+        var result = processLetterTouched();
 
+        StartCoroutine(unPickLetterWithDelay(delayTimer, result));
+
+        if (!result.isTriggeredLetter && pick)
+            processAction(2, false);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private Result processLetterTouched()
     {
         var result = letterTouched();
@@ -48,15 +68,6 @@ public class LetterButton : MonoBehaviour {
         return result;
     }
 
-    private void processAction(float delayTimer, bool pick)
-    {
-        var result = processLetterTouched();
-
-        StartCoroutine(unPickLetterWithDelay(delayTimer, result));
-
-        if (!result.isTriggeredLetter && pick)
-            processAction(2, false);
-    }
 
     private Result letterTouched()
     {
@@ -84,7 +95,6 @@ public class LetterButton : MonoBehaviour {
     {
         if (result.Status == 0)
         {
-            Debug.Log("change state");
             _imageController.ChangeState(result);
         }
     }

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelBeginning : MonoBehaviour {
     private GameObject _preLevel;
+    private LettersContainer _letterContainer;
 
     void Awake() {
         _preLevel = GameObject.FindGameObjectWithTag("PreLevel");

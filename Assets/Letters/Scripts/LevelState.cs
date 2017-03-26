@@ -10,11 +10,13 @@ public class LevelState : MonoBehaviour {
 
     private SwapHandler _swapHandler;
     private FinishLevel _finishLevel;
+    private int isWrongLetterCounter;
 
 	// Use this for initialization
 	void Start () {
         _swapHandler = GameObject.FindGameObjectWithTag("Letters").GetComponent<SwapHandler>();
         _finishLevel = GameObject.FindGameObjectWithTag("ResultsEventHandler").GetComponent<FinishLevel>();
+        isWrongLetterCounter = 0;
     }
 
     public void TriggerChanges(Result result)
@@ -23,11 +25,30 @@ public class LevelState : MonoBehaviour {
         {
             if (result.isCorrectName)
                 _finishLevel.TriggerFinishLevel();
-            else if (result.isTriggeredLetter && result.Action == "PICK" && result.isCorrectLetter) {
-                Debug.Log("fuck");
+            else if (result.isTriggeredLetter && result.Action == "PICK" && result.isCorrectLetter)
+            {
                 StartCoroutine(swapTrigger(.2f));
+                isWrongLetterCounter = 0;
+            }
+            else if (result.Action == "PICK") {
+                isWrongLetterCounter++;
             }
         }
+    }
+
+    public int GetWrongCounter()
+    {
+        return isWrongLetterCounter;
+    }
+
+    public void ResetWrongCounter()
+    {
+        isWrongLetterCounter = 0;
+    }
+
+    public void SwapItems()
+    {
+        StartCoroutine(swapTrigger(.2f));
     }
 
     private IEnumerator swapTrigger(float sec)

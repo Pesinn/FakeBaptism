@@ -10,10 +10,14 @@ public class LetterButton : MonoBehaviour {
     private LetterImageController _imageController;
     private LevelState _levelState;
     private bool isTriggered;
+    // Count how mant wrong guesses have been made
+    private int wrongCounter;
+    private bool letterInProcess = false;
 
     void Awake()
     {
         isTriggered = false;
+        wrongCounter = 0;
 
         myButton = GetComponent<Button>();
         myButton.onClick.AddListener(onClickEvent);
@@ -48,18 +52,21 @@ public class LetterButton : MonoBehaviour {
     {
         var result = processLetterTouched();
 
-        StartCoroutine(unPickLetterWithDelay(delayTimer, result));
+        StartCoroutine(pickLetterWithDelay(delayTimer, result));
 
         if (!result.isTriggeredLetter && pick)
         {
-            processAction(0.3f, false);
+            StartCoroutine(processActionFromRecursion(0.5f, false));
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
+    private IEnumerator processActionFromRecursion(float delayTimer, bool pick)
+    {
+        if (letterInProcess)
+            yield return new WaitForSeconds(0.1f);
+        processAction(delayTimer, pick);
+    }
+
     private Result processLetterTouched()
     {
         var result = letterTouched();
@@ -75,22 +82,28 @@ public class LetterButton : MonoBehaviour {
     {
         LetterAction letterAction;
         if (!isTriggered)
-        {
             letterAction = new PickLetter(myButton.name);
-        }
         else
-        {
             letterAction = new UnPickLetter(myButton.name);
-        }
-
         return _letterClickDetector.LetterAction(letterAction);
     }
 
-    private IEnumerator unPickLetterWithDelay(float sec, Result res)
+    private IEnumerator pickLetterWithDelay(float sec, Result res)
     {
+        letterInProcess = true;
         yield return new WaitForSeconds(sec);
         changeObjectState(res);
         triggerLevelState(res);
+        checkWrongCounter();
+        letterInProcess = false;
+    }
+
+    private void checkWrongCounter()
+    {
+        if (_levelState.GetWrongCounter() >= 3) {
+            _levelState.SwapItems();
+            _levelState.ResetWrongCounter();
+        }
     }
 
     private void changeObjectState(Result result)

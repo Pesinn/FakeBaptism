@@ -8,8 +8,8 @@ public class StoreHandler {
         PlayerPrefs.SetString("name", name);
     }
 
-    public void LoadName()
+    public string LoadName()
     {
-        PlayerPrefs.GetString("name");
+        return PlayerPrefs.GetString("name");
     }
 }

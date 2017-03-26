@@ -79,6 +79,7 @@
     <Compile Include="Assets\Letters\Scripts\FinishLevel.cs" />
     <Compile Include="Assets\Letters\Scripts\LetterButton.cs" />
     <Compile Include="Assets\Letters\Scripts\LetterClickDetector.cs" />
+    <Compile Include="Assets\Letters\Scripts\LetterCreator.cs" />
     <Compile Include="Assets\Letters\Scripts\LetterEventHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\LetterImageController.cs" />
     <Compile Include="Assets\Letters\Scripts\LettersContainer.cs" />
@@ -87,7 +88,6 @@
     <Compile Include="Assets\Letters\Scripts\OnStart.cs" />
     <Compile Include="Assets\Letters\Scripts\OnStartLevel2.cs" />
     <Compile Include="Assets\Letters\Scripts\Result.cs" />
-    <Compile Include="Assets\Letters\Scripts\SpawnLetters.cs" />
     <Compile Include="Assets\Letters\Scripts\StoreHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\SwapHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\SwapItems.cs" />

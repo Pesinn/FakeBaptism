@@ -116,9 +116,6 @@ public class LettersContainer
             _containerStatus.InnerText = "You cannot unpick a letter that hasn't been picked";
         }
 
-        // GetListAsString("_correctChoosenLetters", _correctChoosenLetters);
-        // GetListAsString("_choosenLetters", _choosenLetters);
-
         return _containerStatus;
     }
 

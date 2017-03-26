@@ -51,7 +51,9 @@ public class LetterButton : MonoBehaviour {
         StartCoroutine(unPickLetterWithDelay(delayTimer, result));
 
         if (!result.isTriggeredLetter && pick)
-            processAction(2, false);
+        {
+            processAction(0.3f, false);
+        }
     }
 
     /// <summary>
@@ -97,6 +99,13 @@ public class LetterButton : MonoBehaviour {
         {
             _imageController.ChangeState(result);
         }
+    }
+
+    private void LogThatFuckingResult(Result res)
+    {
+        Debug.Log("==================");
+        Debug.Log("Action: " + res.Action + " Inner Text: " + res.InnerText + " isCorrectLetter: " + res.isCorrectLetter + " isCorrectName: " + res.isCorrectName
+            + " istriggeredLetter: " + res.isTriggeredLetter + " Letter: " + res.Letter + " Status: " + res.Status + " Test: " + res.Text);
     }
 
     /// <summary>

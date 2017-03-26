@@ -19,9 +19,11 @@ public class SwapHandler : MonoBehaviour {
     }
 
     List<Transform> _children;
+    SwapItems swap;
 
 	// Use this for initialization
 	void Awake () {
+        swap = new SwapItems();
         _children = new List<Transform>();
         _children = getChildren();
     }
@@ -29,7 +31,7 @@ public class SwapHandler : MonoBehaviour {
     public void SwapTrigger()
     {
         _children = schuffleList(_children);
-        SwapItems(_children);
+        swap.SwapTransformsRandomly(_children);
     }
 
     private List<Transform> schuffleList(List<Transform> oldChildren)
@@ -52,17 +54,6 @@ public class SwapHandler : MonoBehaviour {
         }
 
         return newChildren;
-    }
-
-    private void SwapItems(List<Transform> listToSwap)
-    {
-        for(var i=0; i<listToSwap.Count; i++)
-        {
-            var random = Random.Range(0, listToSwap.Count);
-            var tempPos = listToSwap[i].localPosition;
-            listToSwap[i].localPosition = new Vector3(listToSwap[random].localPosition.x, listToSwap[random].localPosition.y, 0);
-            listToSwap[random].localPosition = tempPos;
-        }
     }
 
     /// <summary>

@@ -87,8 +87,10 @@
     <Compile Include="Assets\Letters\Scripts\OnStart.cs" />
     <Compile Include="Assets\Letters\Scripts\OnStartLevel2.cs" />
     <Compile Include="Assets\Letters\Scripts\Result.cs" />
+    <Compile Include="Assets\Letters\Scripts\SpawnLetters.cs" />
     <Compile Include="Assets\Letters\Scripts\StoreHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\SwapHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\SwapItems.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\HD-2D Background Art Wonderland\Readme.txt" />

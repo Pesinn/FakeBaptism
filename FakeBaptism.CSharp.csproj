@@ -87,6 +87,7 @@
     <Compile Include="Assets\Letters\Scripts\LevelState.cs" />
     <Compile Include="Assets\Letters\Scripts\OnStart.cs" />
     <Compile Include="Assets\Letters\Scripts\OnStartLevel2.cs" />
+    <Compile Include="Assets\Letters\Scripts\PrepareSpawnLetter.cs" />
     <Compile Include="Assets\Letters\Scripts\Result.cs" />
     <Compile Include="Assets\Letters\Scripts\StoreHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\SwapHandler.cs" />

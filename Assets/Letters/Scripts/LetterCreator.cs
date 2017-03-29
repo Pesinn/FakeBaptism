@@ -91,13 +91,15 @@ public class LetterCreator : MonoBehaviour {
 
     public void SpawnLetters(List<string> letters)
     {
-        spawnLetters(letters);
+        spawnChildren(letters);
     }
 
-    private void spawnLetters(List<string> letters)
+    private void spawnChildren(List<string> letters)
     {
-        countChildrenCapInEachRow();
-        countChildrenCapInEachColumn();
+        var rowCap = countChildrenCapInEachRow();
+        var columnCap = countChildrenCapInEachColumn();
+        spawnEachChildren(4, rowCap, columnCap);
+        
         var x = -200;
         GameObject newSpawnObject;
         foreach (var i in letters)
@@ -161,6 +163,11 @@ public class LetterCreator : MonoBehaviour {
         }
 
         return counter;
+    }
+
+    private void spawnEachChildren(int startRow, int maxRowCap, int maxColumnCap)
+    {
+
     }
 
 

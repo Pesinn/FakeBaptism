@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UtilsList<T> {
+public class UtilsList {
 
     private class ObjectContainer
     {
@@ -21,7 +21,7 @@ public class UtilsList<T> {
     /// </summary>
     /// <param name="list">List to shuffle</param>
     /// <returns>Shuffled list</returns>
-    public List<T> SchuffleList(List<T> list)
+    public List<T> SchuffleList<T>(List<T> list) where T : class
     {
         var capacity = list.Count;
         List<T> newChildren = new List<T>();

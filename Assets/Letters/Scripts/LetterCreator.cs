@@ -10,7 +10,7 @@ public class LetterCreator : MonoBehaviour {
 
     public string _canvasTag;
 
-    public class ChildObject
+    private class ChildObject
     {
         public Vector2 Size;
         public Vector2 Offset;
@@ -22,7 +22,7 @@ public class LetterCreator : MonoBehaviour {
         }
     }
 
-    public class CanvasObject
+    private class CanvasObject
     {
         public Vector2 Size;
         public Vector2 BoardSize;
@@ -47,8 +47,11 @@ public class LetterCreator : MonoBehaviour {
     // Contains all letters that can be displayed on screen
     // We want to be able to show all letters in the English alphabet
     private Dictionary<string, int> _letterDictionary;
-    
+
+    private SpawnGameObject _spawnGameObject;
+
     void Awake () {
+        _spawnGameObject = GetComponent<SpawnGameObject>();
         createLetterDictionary();
         getPropertiesFromSpawnObject();
         getLevelSizeLimits();
@@ -91,27 +94,49 @@ public class LetterCreator : MonoBehaviour {
 
     public void SpawnLetters(List<string> letters)
     {
-        spawnChildren(letters);
+        spawnChildren(shuffleLetters(letters));
+    }
+
+    /// <summary>
+    /// Shuffle letters in list
+    /// </summary>
+    /// <param name="letters">List of letters</param>
+    /// <returns>List of letters</returns>
+    private List<string> shuffleLetters(List<string> letters)
+    {
+        UtilsList utilsList = new UtilsList();
+        return utilsList.SchuffleList<string>(letters);
     }
 
     private void spawnChildren(List<string> letters)
     {
         var rowCap = countChildrenCapInEachRow();
         var columnCap = countChildrenCapInEachColumn();
-        spawnEachChildren(4, rowCap, columnCap);
-        
-        var x = -200;
-        GameObject newSpawnObject;
+        spawnEachChildren(letters, 4, rowCap, columnCap);
+        printList(letters);
+
+        var x = -1400;
         foreach (var i in letters)
         {
-            Debug.Log(i);
             var letterIndex = _letterDictionary[i];
-            newSpawnObject = _spawnObject;
+            GameObject newSpawnObject = _spawnObject;
             newSpawnObject.transform.GetComponent<Image>().sprite = _sprites[letterIndex];
-            var instantiate = Instantiate(newSpawnObject, new Vector3(0, 0, 0), transform.rotation);
-            
-            instantiate.transform.SetParent(gameObject.transform, false);
+
+            GameObjectContainer objectContainer = new GameObjectContainer(newSpawnObject, x, -200);
+            SpawnGameObject spawner = new SpawnGameObject();
+
+            _spawnGameObject.SpawnGameObjectRelatedToParent(objectContainer, gameObject);
+
             x += 400;
+        }
+    }
+
+    private void printList(List<string> letters)
+    {
+        Debug.Log("=========");
+        foreach(var i in letters)
+        {
+            Debug.Log(i);
         }
     }
 
@@ -165,9 +190,9 @@ public class LetterCreator : MonoBehaviour {
         return counter;
     }
 
-    private void spawnEachChildren(int startRow, int maxRowCap, int maxColumnCap)
+    private void spawnEachChildren(List<string> letters, int startRow, int maxRowCap, int maxColumnCap)
     {
-
+        
     }
 
 

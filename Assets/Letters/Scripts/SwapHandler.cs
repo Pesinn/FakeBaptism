@@ -19,8 +19,8 @@ public class SwapHandler : MonoBehaviour {
 
     public void SwapTrigger()
     {
-        UtilsList<Transform> listHelper = new UtilsList<Transform>();
-        _children = listHelper.SchuffleList(_children);
+        UtilsList listHelper = new UtilsList();
+        _children = listHelper.SchuffleList<Transform>(_children);
         swap.SwapTransformsRandomly(_children);
     }
 

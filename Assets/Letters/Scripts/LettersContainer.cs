@@ -20,9 +20,16 @@ public class LettersContainer
 
         _containerStatus = new Result();
 
+        _correctLetters.Add("N");
         _correctLetters.Add("A");
-        _correctLetters.Add("R");
+        _correctLetters.Add("D");
         _correctLetters.Add("I");
+        _correctLetters.Add("A");
+        _correctLetters.Add("B");
+        _correctLetters.Add("J");
+        _correctLetters.Add("O");
+        _correctLetters.Add("R");
+        _correctLetters.Add("K");
     }
 
     public List<string> GetCorrectName()

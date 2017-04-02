@@ -75,9 +75,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Letters\Scripts\CanvasChildPositionHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\EvaporateHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\FinishLevel.cs" />
-    <Compile Include="Assets\Letters\Scripts\GameObjectContainer.cs" />
     <Compile Include="Assets\Letters\Scripts\IUtilsList.cs" />
     <Compile Include="Assets\Letters\Scripts\LetterButton.cs" />
     <Compile Include="Assets\Letters\Scripts\LetterClickDetector.cs" />
@@ -92,8 +92,6 @@
     <Compile Include="Assets\Letters\Scripts\OnStartLevel2.cs" />
     <Compile Include="Assets\Letters\Scripts\PrepareSpawnLetter.cs" />
     <Compile Include="Assets\Letters\Scripts\Result.cs" />
-    <Compile Include="Assets\Letters\Scripts\SpawnCanvasChildren.cs" />
-    <Compile Include="Assets\Letters\Scripts\SpawnGameObject.cs" />
     <Compile Include="Assets\Letters\Scripts\StoreHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\SwapHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\SwapItems.cs" />

@@ -14,11 +14,12 @@ public class LetterCreator : MonoBehaviour {
     {
         public Vector2 Size;
         public Vector2 Offset;
-
+        public Vector2 WholeSize;
         public ChildObject()
         {
             Size = new Vector2();
             Offset = new Vector2();
+            WholeSize = new Vector2();
         }
     }
 
@@ -72,6 +73,8 @@ public class LetterCreator : MonoBehaviour {
         _childObject.Size.y = y;
         _childObject.Offset.x = xOffset;
         _childObject.Offset.y = yOffset;
+        _childObject.WholeSize.x = x + xOffset;
+        _childObject.WholeSize.y = y + yOffset;
     }
 
     /// <summary>
@@ -112,7 +115,7 @@ public class LetterCreator : MonoBehaviour {
         var rowCap = countChildrenCapInEachRow();
         var columnCap = countChildrenCapInEachColumn();
         spawnEachChildren(letters, 4, rowCap, columnCap);
-        //printList(letters);
+
         //Test();
         var x = -1400;
 
@@ -140,31 +143,16 @@ public class LetterCreator : MonoBehaviour {
         */
     }
 
-    private void Test()
-    {
-        GameObject spawnObject1 = new GameObject();
-        spawnObject1 = _spawnObject;
-        spawnObject1.transform.localScale = new Vector3(_spawnObject.transform.localScale.x, _spawnObject.transform.localScale.y, 0);
-        spawnObject1.transform.GetComponent<Image>().sprite = _sprites[0];
-        //        spawnObject1.transform.localPosition = new Vector3(-100, 10);
-        Debug.Log("Logging gameObject 1: " + spawnObject1.transform.GetComponent<Image>().sprite);
-
-
-        GameObject spawnObject2 = new GameObject();
-        spawnObject2.transform.localScale = new Vector3(_spawnObject.transform.localScale.x, _spawnObject.transform.localScale.y, 0);
-        spawnObject2.transform.localPosition = new Vector3(100, -10);
-        Debug.Log("Logging gameObject 1: " + spawnObject1.transform.GetComponent<Image>().sprite);
-        Debug.Log("Logging gameObject 2: " + spawnObject2.transform.GetComponent<Image>().sprite);
-    }
-
-
     private void printList(List<string> letters)
     {
+        var letterStr = "";
         Debug.Log("=========");
         foreach(var i in letters)
         {
-            Debug.Log(i);
+            letterStr += i;
+            letterStr += ", ";
         }
+        Debug.Log(letterStr);
     }
 
     private void printDoubleList(List<List<string>> letters)
@@ -236,6 +224,8 @@ public class LetterCreator : MonoBehaviour {
         List<List<string>> dividedChildren = new List<List<string>>();
 
         dividedChildren = divideLettersIntoRows(maxRowCap, maxColumnCap, letters);
+
+        spawnAllChildren(dividedChildren, startRow);
     }
 
     private List<List<string>> divideLettersIntoRows(int maxRowNum, int maxColumnNum, List<string> letters)
@@ -247,7 +237,7 @@ public class LetterCreator : MonoBehaviour {
         else
         {
             listLetter = splitlist(letters, maxRowNum);
-            printDoubleList(listLetter);
+            // printDoubleList(listLetter);
         }
 
         return listLetter;
@@ -263,10 +253,113 @@ public class LetterCreator : MonoBehaviour {
         return list;
     }
 
-    private void spawnSingleRow()
+    private void spawnAllChildren(List<List<string>> dividedLetters, int startRow)
     {
-        
+        // Even number
+        if (dividedLetters.Count % 2 == 0)
+        {
+            spawnSingleRow(dividedLetters[0], _childObject.WholeSize.x/2f, startRow, 0);
+        }
+        else
+        {
+            spawnSingleRow(dividedLetters[0], 0f, startRow, 4);
+        }
     }
+
+    /// <summary>
+    /// Spawn all letters in a single row
+    /// </summary>
+    /// <param name="lettersRow"></param>
+    /// <param name="compareX"></param>
+    /// <param name="rowNum"></param>
+    /// <param name="indexFrom"></param>
+    private void spawnSingleRow(List<string> lettersRow, float x, int rowNum, int index)
+    {
+        printList(lettersRow);
+
+        if (index < 0)
+        {
+            Debug.Log("index < 0");
+            return;
+        }
+
+        if (x + _childObject.Offset.x + _canvas.Offset >= _canvas.Size.x)
+        {
+            Debug.LogError("The canvas is too small");
+        }
+
+        if (lettersRow.Count == 1) {
+            Debug.Log("Count == 1");
+            return;
+        }
+        else if (lettersRow.Count - 1 == index) {
+            Debug.Log("Left");
+            spawnRow(lettersRow, x, index);
+            return;
+        }
+        else if(index == 0) {
+            spawnRow(lettersRow, x, index);
+            return;
+        }
+
+        spawnLetter(lettersRow[index], 0, -100);
+        lettersRow.RemoveAt(index);
+        List<List<string>> dividedLetters = new List<List<string>>();
+        dividedLetters = splitlist(lettersRow, lettersRow.Count / 2);
+
+        printList(dividedLetters[0]);
+        printList(dividedLetters[1]);
+
+        spawnRow(dividedLetters[0], createNewXPositionLeft(x), dividedLetters[0].Count - 1);
+        spawnRow(dividedLetters[1], createNewXPositionRight(x), 0);
+
+//        spawnSingleRow(dividedLetters[0], createNewXPositionLeft(x), rowNum, dividedLetters[0].Count - 1);
+//        spawnSingleRow(dividedLetters[1], createNewXPositionRight(x), rowNum, 0);
+    }
+
+    private void spawnRow(List<string> letters, float x, int index)
+    {
+        spawnLetter(letters[index], x, -100);
+        if (letters.Count == 1)
+        {
+            return;
+        }
+        else if (letters.Count - 1 == index)
+        {
+            Debug.Log("letters.Count - 1 == index" + letters[index]);
+            letters.RemoveAt(index);
+            spawnRow(letters, createNewXPositionLeft(x), letters.Count - 1);
+        }
+        else if (index == 0)
+        {
+            letters.RemoveAt(index);
+            spawnRow(letters, createNewXPositionRight(x), 0);
+        }
+    }
+
+    private float createNewXPositionLeft(float x)
+    {
+        var size = _childObject.Size.x + _childObject.Offset.x;
+        x += size;
+        x *= (-1);
+        return x;
+    }
+
+    private float createNewXPositionRight(float x)
+    {
+        x += _childObject.Size.x + _childObject.Offset.x;
+        return x;
+    }
+
+    private void spawnLetter(string letter, float x, int y)
+    {
+        var letterIndex = _letterDictionary[letter];
+        GameObject newSpawnObject = _spawnObject;
+        newSpawnObject.transform.GetComponent<Image>().sprite = _sprites[letterIndex];
+        var instantiate = Instantiate(newSpawnObject, new Vector3(x, -100, 0), transform.rotation);
+        instantiate.transform.SetParent(gameObject.transform, false);
+    }
+
 
 
     private void createLetterDictionary()

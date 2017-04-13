@@ -4,37 +4,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+public class ChildObject
+{
+    public Vector2 Size;
+    public Vector2 Offset;
+    public Vector2 WholeSize;
+    public ChildObject()
+    {
+        Size = new Vector2();
+        Offset = new Vector2();
+        WholeSize = new Vector2();
+    }
+}
+
+public class CanvasObject
+{
+    public Vector2 Size;
+    public Vector2 BoardSize;
+    public float Offset;
+
+    public CanvasObject()
+    {
+        Size = new Vector2();
+        BoardSize = new Vector2();
+    }
+}
+
 public class LetterCreator : MonoBehaviour {
     // Object that is spawned for each letter
     public GameObject _spawnObject;
 
     public string _canvasTag;
 
-    private class ChildObject
-    {
-        public Vector2 Size;
-        public Vector2 Offset;
-        public Vector2 WholeSize;
-        public ChildObject()
-        {
-            Size = new Vector2();
-            Offset = new Vector2();
-            WholeSize = new Vector2();
-        }
-    }
-
-    private class CanvasObject
-    {
-        public Vector2 Size;
-        public Vector2 BoardSize;
-        public float Offset;
-
-        public CanvasObject()
-        {
-            Size = new Vector2();
-            BoardSize = new Vector2();
-        }
-    }
+    private List<float> _yCoord;
 
     // Size of each object that contain letter
     // Each object should be on same size
@@ -94,8 +97,23 @@ public class LetterCreator : MonoBehaviour {
 
     public void SpawnLetters(List<string> letters)
     {
+//        printList(letters);
+        var newLetters = new List<string>();
+        newLetters.Add("A");
+        newLetters.Add("B");
+        newLetters.Add("C");
+        newLetters.Add("D");
+        newLetters.Add("E");
+        newLetters.Add("F");
+        newLetters.Add("G");
+        newLetters.Add("H");
+        newLetters.Add("I");
+
+        newLetters.Add("J");
+        newLetters.Add("K");
+        newLetters.Add("L");
         //        spawnChildren(shuffleLetters(letters));
-        spawnChildren(letters);
+        spawnChildren(newLetters);
     }
 
     /// <summary>
@@ -115,32 +133,6 @@ public class LetterCreator : MonoBehaviour {
         var rowCap = countChildrenCapInEachRow();
         var columnCap = countChildrenCapInEachColumn();
         spawnEachChildren(letters, 4, rowCap, columnCap);
-
-        //Test();
-        var x = -1400;
-
-/*        foreach (var i in letters)
-        {
-            var letterIndex = _letterDictionary[i];
-            GameObject newSpawnObject = _spawnObject;
-            newSpawnObject.transform.GetComponent<Image>().sprite = _sprites[letterIndex];
-
-            GameObjectContainer objectContainer = new GameObjectContainer(newSpawnObject, x, -200);
-//            Debug.Log(objectContainer.GetGameObject().transform.GetComponent<Image>().sprite);
-            objectContainers.Add(objectContainer);
-            //          SpawnGameObject spawner = new SpawnGameObject();
-
-            //          _spawnGameObject.SpawnGameObjectRelatedToParent(objectContainer, gameObject);
-
-            var instantiate = Instantiate(objectContainer.GetGameObject(), new Vector3(objectContainer.GetLocationX(), objectContainer.GetLocationY(), 0), transform.rotation);
-            instantiate.transform.SetParent(gameObject.transform, false);
-
-            x += 400;
-        }
-        
-        CanvasChildPositionHandler positionHandler = new CanvasChildPositionHandler(objectContainers);
-        positionHandler.Spawn();
-        */
     }
 
     private void printList(List<string> letters)
@@ -235,10 +227,7 @@ public class LetterCreator : MonoBehaviour {
         if(maxRowNum * maxColumnNum < letters.Count)
             Debug.LogError("Canvas cannot handle " + letters.Count + " number of letters");
         else
-        {
             listLetter = splitlist(letters, maxRowNum);
-            // printDoubleList(listLetter);
-        }
 
         return listLetter;
     }
@@ -246,24 +235,28 @@ public class LetterCreator : MonoBehaviour {
     private List<List<string>> splitlist(List<string> letters, int maxSize)
     {
         var list = new List<List<string>>();
+
         for(int i=0; i<letters.Count; i += maxSize)
-        {
             list.Add(letters.GetRange(i, Math.Min(maxSize, letters.Count - i)));
-        }
+
         return list;
     }
 
     private void spawnAllChildren(List<List<string>> dividedLetters, int startRow)
     {
-        // Even number
-        if (dividedLetters.Count % 2 == 0)
+        foreach(var row in dividedLetters)
         {
-            spawnSingleRow(dividedLetters[0], _childObject.WholeSize.x/2f, startRow, 0);
+            // Even number
+            if (row.Count % 2 == 0)
+                spawnSingleRow(row, startRow, -100);
+            else
+                spawnSingleRow(row, startRow, -100);
         }
-        else
-        {
-            spawnSingleRow(dividedLetters[0], 0f, startRow, 4);
-        }
+    }
+
+    private float calculateRowCoord()
+    {
+
     }
 
     /// <summary>
@@ -273,60 +266,124 @@ public class LetterCreator : MonoBehaviour {
     /// <param name="compareX"></param>
     /// <param name="rowNum"></param>
     /// <param name="indexFrom"></param>
-    private void spawnSingleRow(List<string> lettersRow, float x, int rowNum, int index)
+    private void spawnSingleRow(List<string> lettersRow, int rowNum, int yPos)
     {
+        var size = lettersRow.Count;
         printList(lettersRow);
+ 
+        // TODO make some check if cancas size is big enough
+        //if (x + _childObject.Offset.x + _canvas.Offset >= _canvas.Size.x)
+        //    Debug.LogError("The canvas is too small");
 
-        if (index < 0)
+        // When only single letter is in the list, spawn it and finish
+        if (size == 1)
         {
-            Debug.Log("index < 0");
+            spawnLetter(lettersRow[0], 0, -100);
             return;
         }
 
-        if (x + _childObject.Offset.x + _canvas.Offset >= _canvas.Size.x)
-        {
-            Debug.LogError("The canvas is too small");
-        }
+        if (size % 2 == 0)
+            spawnEvenRow(lettersRow);
+        else
+            spawnOddRow(lettersRow);
+    }
 
-        if (lettersRow.Count == 1) {
-            Debug.Log("Count == 1");
-            return;
-        }
-        else if (lettersRow.Count - 1 == index) {
-            Debug.Log("Left");
-            spawnRow(lettersRow, x, index);
-            return;
-        }
-        else if(index == 0) {
-            spawnRow(lettersRow, x, index);
-            return;
-        }
+    /// <summary>
+    /// Spawning even row where lettersRow contains at
+    /// least two letters
+    /// </summary>
+    /// <param name="lettersRow"></param>
+    /// <param name="index"></param>
+    private void spawnEvenRow(List<string> lettersRow)
+    {
+        var letterCount = lettersRow.Count;
 
+        var rightIndex = Convert.ToInt32(lettersRow.Count / 2f);
+        var leftIndex = Convert.ToInt32(rightIndex - 1);
+
+        var firstXPos = spawnFirstEvenLetter(lettersRow[leftIndex]);
+        var secondXPos = spawnSecondEvenLetter(lettersRow[rightIndex]);
+
+        lettersRow.RemoveAt(rightIndex);
+        lettersRow.RemoveAt(leftIndex);
+
+        List<List<string>> dividedLetters = new List<List<string>>();
+
+        // If the row has odd numbers, get mid index + 1
+        dividedLetters = splitlist(lettersRow, lettersRow.Count / 2);
+        if(dividedLetters.Count > 0)
+            spawnRow(dividedLetters[0], createNewXPositionLeft(firstXPos), dividedLetters[0].Count - 1);
+            if(dividedLetters.Count > 1)
+                spawnRow(dividedLetters[1], createNewXPositionRight(secondXPos), 0);
+    }
+
+    private float spawnFirstEvenLetter(string letter)
+    {
+        // Calculate the offset from middle
+        var offset = _childObject.Offset.x / 2f;
+
+        // Calculate the mid coord of the object
+        var midPosition = (_childObject.Size.x / 2f);
+
+        var x = (-1) * (offset + midPosition);
+
+        spawnLetter(letter, x, -100);
+
+        return x;
+    }
+
+    private float spawnSecondEvenLetter(string letter)
+    {
+        // Calculate the offset from middle
+        var offset = _childObject.Offset.x / 2f;
+
+        // Calculate the mid coord of the object
+        var midPosition = (_childObject.Size.x / 2f);
+
+        var x = offset + midPosition;
+
+        spawnLetter(letter, x, -100);
+
+        return x;
+    }
+
+    /// <summary>
+    /// Spawning odd row where lettersRow contains at least
+    /// three letters
+    /// </summary>
+    /// <param name="lettersRow">List of letters to spawn</param>
+    /// <param name="index"></param>
+    private void spawnOddRow(List<string> lettersRow)
+    {
+        var index = Convert.ToInt32(lettersRow.Count / 2f);
         spawnLetter(lettersRow[index], 0, -100);
         lettersRow.RemoveAt(index);
         List<List<string>> dividedLetters = new List<List<string>>();
+
+        // If the row has odd numbers, get mid index + 1
         dividedLetters = splitlist(lettersRow, lettersRow.Count / 2);
 
-        printList(dividedLetters[0]);
-        printList(dividedLetters[1]);
-
-        spawnRow(dividedLetters[0], createNewXPositionLeft(x), dividedLetters[0].Count - 1);
-        spawnRow(dividedLetters[1], createNewXPositionRight(x), 0);
-
-//        spawnSingleRow(dividedLetters[0], createNewXPositionLeft(x), rowNum, dividedLetters[0].Count - 1);
-//        spawnSingleRow(dividedLetters[1], createNewXPositionRight(x), rowNum, 0);
+        spawnRow(dividedLetters[0], createNewXPositionLeft(0f), dividedLetters[0].Count - 1);
+        spawnRow(dividedLetters[1], createNewXPositionRight(0f), 0);
     }
 
+    /// <summary>
+    /// Spawn row after first letter/letters have been spawned
+    /// </summary>
+    /// <param name="letters"></param>
+    /// <param name="x"></param>
+    /// <param name="index"></param>
     private void spawnRow(List<string> letters, float x, int index)
     {
+        if (letters == null)
+            return;
+
         spawnLetter(letters[index], x, -100);
         if (letters.Count == 1)
-        {
             return;
-        }
+
         else if (letters.Count - 1 == index)
         {
-            Debug.Log("letters.Count - 1 == index" + letters[index]);
             letters.RemoveAt(index);
             spawnRow(letters, createNewXPositionLeft(x), letters.Count - 1);
         }
@@ -337,20 +394,47 @@ public class LetterCreator : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Create new X position according to parameters position.
+    /// When displaying new object left to an old object,
+    /// the paramter should have the old object x pos, and
+    /// the new object's X position will be returned.
+    /// </summary>
+    /// <param name="x">Position to work from</param>
+    /// <returns>New X position</returns>
     private float createNewXPositionLeft(float x)
     {
+        // Change x to positive number if it's negative
+        if(x < 0.0f)
+            x = x * (-1);
+
         var size = _childObject.Size.x + _childObject.Offset.x;
         x += size;
         x *= (-1);
         return x;
     }
 
+    /// <summary>
+    /// Create new X position according to parameters position.
+    /// When displaying new object right to an old object,
+    /// the paramter should have the old object x pos, and
+    /// the new object's X position will be returned.
+    /// </summary>
+    /// <param name="x">Position to work from</param>
+    /// <returns>New X position</returns>
     private float createNewXPositionRight(float x)
     {
         x += _childObject.Size.x + _childObject.Offset.x;
         return x;
     }
 
+    /// <summary>
+    /// Spawn letter in X and Y position on the screen
+    /// with correct sprite attached to itself.
+    /// </summary>
+    /// <param name="letter">Letter to display</param>
+    /// <param name="x">X position</param>
+    /// <param name="y">Y position</param>
     private void spawnLetter(string letter, float x, int y)
     {
         var letterIndex = _letterDictionary[letter];
@@ -359,9 +443,7 @@ public class LetterCreator : MonoBehaviour {
         var instantiate = Instantiate(newSpawnObject, new Vector3(x, -100, 0), transform.rotation);
         instantiate.transform.SetParent(gameObject.transform, false);
     }
-
-
-
+    
     private void createLetterDictionary()
     {
         _letterDictionary = new Dictionary<string, int>();

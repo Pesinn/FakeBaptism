@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Letters\Scripts\CanvasChildPositionHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\CoordCalculator.cs" />
     <Compile Include="Assets\Letters\Scripts\EvaporateHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\FinishLevel.cs" />
     <Compile Include="Assets\Letters\Scripts\IUtilsList.cs" />

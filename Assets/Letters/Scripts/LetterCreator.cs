@@ -4,33 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class ChildObject
-{
-    public Vector2 Size;
-    public Vector2 Offset;
-    public Vector2 WholeSize;
-    public ChildObject()
-    {
-        Size = new Vector2();
-        Offset = new Vector2();
-        WholeSize = new Vector2();
-    }
-}
-
-public class CanvasObject
-{
-    public Vector2 Size;
-    public Vector2 BoardSize;
-    public float Offset;
-
-    public CanvasObject()
-    {
-        Size = new Vector2();
-        BoardSize = new Vector2();
-    }
-}
-
 public class LetterCreator : MonoBehaviour {
     // Object that is spawned for each letter
     public GameObject _spawnObject;
@@ -38,6 +11,8 @@ public class LetterCreator : MonoBehaviour {
     public string _canvasTag;
 
     private List<float> _yCoord;
+
+    private CoordCalculator _coordCalculator;
 
     // Size of each object that contain letter
     // Each object should be on same size
@@ -48,6 +23,10 @@ public class LetterCreator : MonoBehaviour {
     // List of sprites in alpabetic order, where index 0 is A and last index is Z
     public List<Sprite> _sprites;
 
+    private ObjectInfo _canvasInfo;
+
+    private ObjectInfo _childInfo;
+
     // Contains all letters that can be displayed on screen
     // We want to be able to show all letters in the English alphabet
     private Dictionary<string, int> _letterDictionary;
@@ -56,7 +35,20 @@ public class LetterCreator : MonoBehaviour {
         createLetterDictionary();
         getPropertiesFromSpawnObject();
         getLevelSizeLimits();
+
+        RectTransform canvasTransform = GameObject.FindGameObjectWithTag(_canvasTag).GetComponent<RectTransform>();
+        RectTransform childTransform = _spawnObject.GetComponent<RectTransform>();
+
+        _coordCalculator = new CoordCalculator(_canvasInfo, _childInfo);
+        //var oddRowCoords = _coordCalculator.GetOddRowCoords();
+        //var evenRowCoords = _coordCalculator.GetEvenRowCoords();
+        var evenRowCoords = _coordCalculator.GetOddColumnCoords();
+        var evenColumnCoords = _coordCalculator.GetEvenColumnCoords();
+        printFloatList(evenRowCoords);
+        printFloatList(evenColumnCoords);
     }
+
+
 
     /// <summary>
     /// Calculate size of each child object
@@ -67,6 +59,9 @@ public class LetterCreator : MonoBehaviour {
 
         var x = rectTransform.rect.width* rectTransform.localScale.x;
         var y = rectTransform.rect.height * rectTransform.localScale.y;
+
+        _childInfo = new ObjectInfo(rectTransform.rect.width, rectTransform.rect.height,
+            new Vector2(rectTransform.localScale.x, rectTransform.localScale.y));
 
         var xOffset = x / 4f;
         var yOffset = x / 4f;
@@ -88,6 +83,10 @@ public class LetterCreator : MonoBehaviour {
     {
         _canvas = new CanvasObject();
         RectTransform rectTransform = GameObject.FindGameObjectWithTag(_canvasTag).GetComponent<RectTransform>();
+
+        _canvasInfo = new ObjectInfo(rectTransform.rect.width, rectTransform.rect.height,
+           new Vector2(1, 1));
+
         _canvas.Size.x = rectTransform.rect.width;
         _canvas.Size.y = rectTransform.rect.height;
         _canvas.Offset = 20f;
@@ -97,23 +96,9 @@ public class LetterCreator : MonoBehaviour {
 
     public void SpawnLetters(List<string> letters)
     {
-//        printList(letters);
-        var newLetters = new List<string>();
-        newLetters.Add("A");
-        newLetters.Add("B");
-        newLetters.Add("C");
-        newLetters.Add("D");
-        newLetters.Add("E");
-        newLetters.Add("F");
-        newLetters.Add("G");
-        newLetters.Add("H");
-        newLetters.Add("I");
 
-        newLetters.Add("J");
-        newLetters.Add("K");
-        newLetters.Add("L");
         //        spawnChildren(shuffleLetters(letters));
-        spawnChildren(newLetters);
+        spawnChildren(letters);
     }
 
     /// <summary>
@@ -130,9 +115,9 @@ public class LetterCreator : MonoBehaviour {
     private void spawnChildren(List<string> letters)
     {
         CanvasChildPositionHandler positionHandler = new CanvasChildPositionHandler();
-        var rowCap = countChildrenCapInEachRow();
-        var columnCap = countChildrenCapInEachColumn();
-        spawnEachChildren(letters, 4, rowCap, columnCap);
+        var rowCap = _coordCalculator.CountChildrenCapInEachRow();
+        var columnCap = _coordCalculator.CountChildrenCapInEachColumn();
+        spawnEachChildren(letters, 0, rowCap, columnCap);
     }
 
     private void printList(List<string> letters)
@@ -145,6 +130,17 @@ public class LetterCreator : MonoBehaviour {
             letterStr += ", ";
         }
         Debug.Log(letterStr);
+    }
+
+    private void printFloatList(List<float> list)
+    {
+        var str = "";
+        foreach(var i in list)
+        {
+            str += i.ToString();
+            str += ", ";
+        }
+        Debug.Log(str);
     }
 
     private void printDoubleList(List<List<string>> letters)
@@ -242,21 +238,39 @@ public class LetterCreator : MonoBehaviour {
         return list;
     }
 
+    /// <summary>
+    /// Goes through each row and each column, then spawn
+    /// each letter.
+    /// </summary>
+    /// <param name="dividedLetters">Double letters list, every list contains each row</param>
+    /// <param name="startRow">Row to start in Y coords</param>
     private void spawnAllChildren(List<List<string>> dividedLetters, int startRow)
     {
-        foreach(var row in dividedLetters)
+        var count = startRow;
+        var yCoord = 0.0f;
+        foreach (var row in dividedLetters)
         {
+            if (isEvenNumber(_coordCalculator.CountChildrenCapInEachColumn()))
+                yCoord = _coordCalculator.GetEvenColumnCoords(count);
+            else
+                yCoord = _coordCalculator.GetOddColumnCoords(count);
+
+            // If count has reach the limit of 
+            if (yCoord == float.MaxValue)
+                count = 0;
+
             // Even number
             if (row.Count % 2 == 0)
-                spawnSingleRow(row, startRow, -100);
+                spawnSingleRow(row, yCoord);
             else
-                spawnSingleRow(row, startRow, -100);
+                spawnSingleRow(row, yCoord);
+            ++count;
         }
     }
 
-    private float calculateRowCoord()
+    private bool isEvenNumber(float number)
     {
-
+        return number % 2 == 0 ? true : false;
     }
 
     /// <summary>
@@ -266,26 +280,23 @@ public class LetterCreator : MonoBehaviour {
     /// <param name="compareX"></param>
     /// <param name="rowNum"></param>
     /// <param name="indexFrom"></param>
-    private void spawnSingleRow(List<string> lettersRow, int rowNum, int yPos)
+    private void spawnSingleRow(List<string> lettersRow, float yPos)
     {
         var size = lettersRow.Count;
-        printList(lettersRow);
  
         // TODO make some check if cancas size is big enough
-        //if (x + _childObject.Offset.x + _canvas.Offset >= _canvas.Size.x)
-        //    Debug.LogError("The canvas is too small");
 
         // When only single letter is in the list, spawn it and finish
         if (size == 1)
         {
-            spawnLetter(lettersRow[0], 0, -100);
+            spawnLetter(lettersRow[0], 0, yPos);
             return;
         }
 
         if (size % 2 == 0)
-            spawnEvenRow(lettersRow);
+            spawnEvenRow(lettersRow, yPos);
         else
-            spawnOddRow(lettersRow);
+            spawnOddRow(lettersRow, yPos);
     }
 
     /// <summary>
@@ -293,58 +304,14 @@ public class LetterCreator : MonoBehaviour {
     /// least two letters
     /// </summary>
     /// <param name="lettersRow"></param>
-    /// <param name="index"></param>
-    private void spawnEvenRow(List<string> lettersRow)
+    private void spawnEvenRow(List<string> lettersRow, float yPos)
     {
-        var letterCount = lettersRow.Count;
-
-        var rightIndex = Convert.ToInt32(lettersRow.Count / 2f);
-        var leftIndex = Convert.ToInt32(rightIndex - 1);
-
-        var firstXPos = spawnFirstEvenLetter(lettersRow[leftIndex]);
-        var secondXPos = spawnSecondEvenLetter(lettersRow[rightIndex]);
-
-        lettersRow.RemoveAt(rightIndex);
-        lettersRow.RemoveAt(leftIndex);
-
-        List<List<string>> dividedLetters = new List<List<string>>();
-
-        // If the row has odd numbers, get mid index + 1
-        dividedLetters = splitlist(lettersRow, lettersRow.Count / 2);
-        if(dividedLetters.Count > 0)
-            spawnRow(dividedLetters[0], createNewXPositionLeft(firstXPos), dividedLetters[0].Count - 1);
-            if(dividedLetters.Count > 1)
-                spawnRow(dividedLetters[1], createNewXPositionRight(secondXPos), 0);
-    }
-
-    private float spawnFirstEvenLetter(string letter)
-    {
-        // Calculate the offset from middle
-        var offset = _childObject.Offset.x / 2f;
-
-        // Calculate the mid coord of the object
-        var midPosition = (_childObject.Size.x / 2f);
-
-        var x = (-1) * (offset + midPosition);
-
-        spawnLetter(letter, x, -100);
-
-        return x;
-    }
-
-    private float spawnSecondEvenLetter(string letter)
-    {
-        // Calculate the offset from middle
-        var offset = _childObject.Offset.x / 2f;
-
-        // Calculate the mid coord of the object
-        var midPosition = (_childObject.Size.x / 2f);
-
-        var x = offset + midPosition;
-
-        spawnLetter(letter, x, -100);
-
-        return x;
+        var count = 0;
+        foreach(var i in lettersRow)
+        {
+            spawnLetter(lettersRow[count], _coordCalculator.GetEvenRowCoords(count), yPos);
+            ++count;
+        }
     }
 
     /// <summary>
@@ -353,79 +320,14 @@ public class LetterCreator : MonoBehaviour {
     /// </summary>
     /// <param name="lettersRow">List of letters to spawn</param>
     /// <param name="index"></param>
-    private void spawnOddRow(List<string> lettersRow)
+    private void spawnOddRow(List<string> lettersRow, float yPos)
     {
-        var index = Convert.ToInt32(lettersRow.Count / 2f);
-        spawnLetter(lettersRow[index], 0, -100);
-        lettersRow.RemoveAt(index);
-        List<List<string>> dividedLetters = new List<List<string>>();
-
-        // If the row has odd numbers, get mid index + 1
-        dividedLetters = splitlist(lettersRow, lettersRow.Count / 2);
-
-        spawnRow(dividedLetters[0], createNewXPositionLeft(0f), dividedLetters[0].Count - 1);
-        spawnRow(dividedLetters[1], createNewXPositionRight(0f), 0);
-    }
-
-    /// <summary>
-    /// Spawn row after first letter/letters have been spawned
-    /// </summary>
-    /// <param name="letters"></param>
-    /// <param name="x"></param>
-    /// <param name="index"></param>
-    private void spawnRow(List<string> letters, float x, int index)
-    {
-        if (letters == null)
-            return;
-
-        spawnLetter(letters[index], x, -100);
-        if (letters.Count == 1)
-            return;
-
-        else if (letters.Count - 1 == index)
+        var count = 0;
+        foreach(var i in lettersRow)
         {
-            letters.RemoveAt(index);
-            spawnRow(letters, createNewXPositionLeft(x), letters.Count - 1);
+            spawnLetter(lettersRow[count], _coordCalculator.GetOddRowCoords(count), yPos);
+            ++count;
         }
-        else if (index == 0)
-        {
-            letters.RemoveAt(index);
-            spawnRow(letters, createNewXPositionRight(x), 0);
-        }
-    }
-
-    /// <summary>
-    /// Create new X position according to parameters position.
-    /// When displaying new object left to an old object,
-    /// the paramter should have the old object x pos, and
-    /// the new object's X position will be returned.
-    /// </summary>
-    /// <param name="x">Position to work from</param>
-    /// <returns>New X position</returns>
-    private float createNewXPositionLeft(float x)
-    {
-        // Change x to positive number if it's negative
-        if(x < 0.0f)
-            x = x * (-1);
-
-        var size = _childObject.Size.x + _childObject.Offset.x;
-        x += size;
-        x *= (-1);
-        return x;
-    }
-
-    /// <summary>
-    /// Create new X position according to parameters position.
-    /// When displaying new object right to an old object,
-    /// the paramter should have the old object x pos, and
-    /// the new object's X position will be returned.
-    /// </summary>
-    /// <param name="x">Position to work from</param>
-    /// <returns>New X position</returns>
-    private float createNewXPositionRight(float x)
-    {
-        x += _childObject.Size.x + _childObject.Offset.x;
-        return x;
     }
 
     /// <summary>
@@ -435,12 +337,12 @@ public class LetterCreator : MonoBehaviour {
     /// <param name="letter">Letter to display</param>
     /// <param name="x">X position</param>
     /// <param name="y">Y position</param>
-    private void spawnLetter(string letter, float x, int y)
+    private void spawnLetter(string letter, float x, float y)
     {
         var letterIndex = _letterDictionary[letter];
         GameObject newSpawnObject = _spawnObject;
         newSpawnObject.transform.GetComponent<Image>().sprite = _sprites[letterIndex];
-        var instantiate = Instantiate(newSpawnObject, new Vector3(x, -100, 0), transform.rotation);
+        var instantiate = Instantiate(newSpawnObject, new Vector3(x, y, 0), transform.rotation);
         instantiate.transform.SetParent(gameObject.transform, false);
     }
     

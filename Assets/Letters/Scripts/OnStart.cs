@@ -22,8 +22,7 @@ public class OnStart : MonoBehaviour {
     private void saveCorrectName()
     {
 
-        //        PlayerPrefs.SetString("name", listToString(_letterContainer.GetCorrectName()));
-        PlayerPrefs.SetString("name", "NADIABJORKPETURSDOTTIR");
+        PlayerPrefs.SetString("name", listToString(_letterContainer.GetCorrectName()));
     }
 
     private string listToString(List<string> list)

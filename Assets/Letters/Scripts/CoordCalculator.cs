@@ -296,11 +296,17 @@ public class CoordCalculator {
         var y = (-1) * (offset + midPosition);
 
         calculateColumnCoords(y, true);
+
+        _evenColumnCoords.Sort();
+        _evenColumnCoords.Reverse();
     }
 
     private void calculateOddColumnCoords()
     {
         calculateColumnCoords(0.0f, false);
+
+        _oddColumnCoords.Sort();
+        _oddColumnCoords.Reverse();
     }
 
     private void calculateColumnCoords(float y, bool isEven)

@@ -94,10 +94,44 @@ public class LetterCreator : MonoBehaviour {
         _canvas.BoardSize.y = _canvas.Size.y - _canvas.Offset;
     }
 
+    private float getEvenRowCoords(int index)
+    {
+        return _coordCalculator.GetEvenRowCoords(index);
+    }
+
+    private float getOddRowCoords(int index)
+    {
+        return _coordCalculator.GetOddRowCoords(index);
+    }
+
+    private float getOddColumnCoords(int index)
+    {
+        return _coordCalculator.GetOddColumnCoords(index);
+    }
+
+    private float getEvenColumnCoords(int index)
+    {
+        return _coordCalculator.GetEvenColumnCoords(index);
+    }
+
     public void SpawnLetters(List<string> letters)
     {
 
         //        spawnChildren(shuffleLetters(letters));
+
+        List<string> letterRow = new List<string>();
+        letterRow.Add("A");
+        letterRow.Add("B");
+        letterRow.Add("C");
+        letterRow.Add("D");
+        letterRow.Add("E");
+        letterRow.Add("F");
+        letterRow.Add("G");
+        letterRow.Add("H");
+        letterRow.Add("I");
+        letterRow.Add("J");
+        letterRow.Add("K");
+        letterRow.Add("L");
         spawnChildren(letters);
     }
 
@@ -117,7 +151,7 @@ public class LetterCreator : MonoBehaviour {
         CanvasChildPositionHandler positionHandler = new CanvasChildPositionHandler();
         var rowCap = _coordCalculator.CountChildrenCapInEachRow();
         var columnCap = _coordCalculator.CountChildrenCapInEachColumn();
-        spawnEachChildren(letters, 0, rowCap, columnCap);
+        spawnEachChildren(letters, 3, rowCap, columnCap);
     }
 
     private void printList(List<string> letters)
@@ -257,13 +291,14 @@ public class LetterCreator : MonoBehaviour {
 
             // If count has reach the limit of 
             if (yCoord == float.MaxValue)
+            {
                 count = 0;
+                yCoord = _coordCalculator.GetOddColumnCoords(count);
+            }
 
-            // Even number
-            if (row.Count % 2 == 0)
-                spawnSingleRow(row, yCoord);
-            else
-                spawnSingleRow(row, yCoord);
+            spawnSingleRow(row, yCoord);
+
+            
             ++count;
         }
     }
@@ -306,12 +341,14 @@ public class LetterCreator : MonoBehaviour {
     /// <param name="lettersRow"></param>
     private void spawnEvenRow(List<string> lettersRow, float yPos)
     {
-        var count = 0;
-        foreach(var i in lettersRow)
-        {
-            spawnLetter(lettersRow[count], _coordCalculator.GetEvenRowCoords(count), yPos);
-            ++count;
-        }
+        var midIndex = Convert.ToInt32(lettersRow.Count / 2f);
+
+        var coordIndex = 0;
+        
+        var leftIndex = midIndex - 1;
+        var rightIndex = midIndex;
+
+        spawnRowPart(lettersRow, leftIndex, rightIndex, yPos, true);
     }
 
     /// <summary>
@@ -322,12 +359,94 @@ public class LetterCreator : MonoBehaviour {
     /// <param name="index"></param>
     private void spawnOddRow(List<string> lettersRow, float yPos)
     {
-        var count = 0;
-        foreach(var i in lettersRow)
-        {
-            spawnLetter(lettersRow[count], _coordCalculator.GetOddRowCoords(count), yPos);
-            ++count;
+        var midIndex  = Convert.ToInt32(Math.Floor(lettersRow.Count / 2f));
+
+        var coordIndex = 0;
+
+        spawnLetter(lettersRow[midIndex], getOddRowCoords(coordIndex), yPos);
+
+        var leftIndex = midIndex - 1;
+        var rightIndex = midIndex + 1;
+
+        spawnRowPart(lettersRow, leftIndex, rightIndex, yPos, false);
+    }
+
+    private void spawnRowPart(List<string> letters, int leftIndex, int rightIndex, float yPos, bool isEven)
+    {
+        var firstCoordIndex = 0;
+        var secondCoordIndex = 0;
+
+        if (isEven) {
+            firstCoordIndex = 0;
+            secondCoordIndex = 1;
         }
+        else {
+            firstCoordIndex = 1;
+            secondCoordIndex = 2;
+        }
+
+        spawnLeftPart(letters, firstCoordIndex, leftIndex, yPos, isEven);
+        spawnRightPart(letters, secondCoordIndex, rightIndex, yPos, isEven);
+    }
+
+    private void spawnRightPart(List<string> letters, int coordIndex, int xIndex, float yPos, bool isEven)
+    {
+        if (letters.Count <= xIndex)
+            return;
+
+        if (isEven)
+            spawnLetter(letters[xIndex], getEvenRowCoords(coordIndex), yPos);
+        else
+            spawnLetter(letters[xIndex], getOddRowCoords(coordIndex), yPos);
+
+        coordIndex += 2;
+
+        spawnRightPart(letters, coordIndex, ++xIndex, yPos, isEven);
+    }
+
+    private void spawnLeftPart(List<string> letters, int coordIndex, int xIndex, float yPos, bool isEven)
+    {
+        if (0 > xIndex)
+            return;
+
+        if (isEven)
+            spawnLetter(letters[xIndex], getEvenRowCoords(coordIndex), yPos);
+        else
+            spawnLetter(letters[xIndex], getOddRowCoords(coordIndex), yPos);
+
+        coordIndex += 2;
+
+        spawnLeftPart(letters, coordIndex, --xIndex, yPos, isEven);
+    }
+
+    private void spawnOddLetterRow(List<string> letters, int yIndex)
+    {
+        if (letters.Count == 1) {
+            spawnLetter(letters[0], _coordCalculator.GetOddRowCoords(0), _coordCalculator.GetOddColumnCoords(yIndex));
+            return;
+        }
+
+        var midIndex = Convert.ToInt32(letters.Count / 2f);
+
+        spawnLetter(letters[midIndex], _coordCalculator.GetOddRowCoords(midIndex), _coordCalculator.GetOddColumnCoords(yIndex));
+        
+        var indexLeft = midIndex - 1;
+        var indexRight = midIndex + 1;
+
+        // Only iterate once over letters list
+        while (indexLeft >= 0.0f || indexRight < letters.Count)
+        {
+            spawnLetter(letters[indexLeft], _coordCalculator.GetOddRowCoords(indexLeft), _coordCalculator.GetOddColumnCoords(yIndex));
+            spawnLetter(letters[indexRight], _coordCalculator.GetOddRowCoords(indexRight), _coordCalculator.GetOddColumnCoords(yIndex));
+
+            --indexLeft;
+            ++indexRight;
+        }
+    }
+
+    private void spawnLetterRow(List<string> letters, int xIndex, int yIndex)
+    {
+        spawnLetterRow(letters, xIndex, yIndex);
     }
 
     /// <summary>

@@ -10,8 +10,6 @@ public class LetterCreator : MonoBehaviour {
 
     public string _canvasTag;
 
-    private List<float> _yCoord;
-
     private CoordCalculator _coordCalculator;
 
     // Size of each object that contain letter
@@ -31,24 +29,25 @@ public class LetterCreator : MonoBehaviour {
     // We want to be able to show all letters in the English alphabet
     private Dictionary<string, int> _letterDictionary;
 
+    private bool isScriptAdded;
+
     void Awake () {
         createLetterDictionary();
         getPropertiesFromSpawnObject();
         getLevelSizeLimits();
 
-        RectTransform canvasTransform = GameObject.FindGameObjectWithTag(_canvasTag).GetComponent<RectTransform>();
-        RectTransform childTransform = _spawnObject.GetComponent<RectTransform>();
-
         _coordCalculator = new CoordCalculator(_canvasInfo, _childInfo);
-        //var oddRowCoords = _coordCalculator.GetOddRowCoords();
-        //var evenRowCoords = _coordCalculator.GetEvenRowCoords();
-        var evenRowCoords = _coordCalculator.GetOddColumnCoords();
-        var evenColumnCoords = _coordCalculator.GetEvenColumnCoords();
-        printFloatList(evenRowCoords);
-        printFloatList(evenColumnCoords);
     }
 
+    public void SpawnLetters(List<string> letters, int startRowIndex=0)
+    {
+        spawnChildren(letters, startRowIndex);
+    }
 
+    public int GetMaximumLettersCount()
+    {
+        return _coordCalculator.CountChildrenCapInEachColumn() * _coordCalculator.CountChildrenCapInEachRow();
+    }
 
     /// <summary>
     /// Calculate size of each child object
@@ -57,7 +56,7 @@ public class LetterCreator : MonoBehaviour {
     {
         RectTransform rectTransform = _spawnObject.GetComponent<RectTransform>();
 
-        var x = rectTransform.rect.width* rectTransform.localScale.x;
+        var x = rectTransform.rect.width * rectTransform.localScale.x;
         var y = rectTransform.rect.height * rectTransform.localScale.y;
 
         _childInfo = new ObjectInfo(rectTransform.rect.width, rectTransform.rect.height,
@@ -114,27 +113,6 @@ public class LetterCreator : MonoBehaviour {
         return _coordCalculator.GetEvenColumnCoords(index);
     }
 
-    public void SpawnLetters(List<string> letters)
-    {
-
-        //        spawnChildren(shuffleLetters(letters));
-
-        List<string> letterRow = new List<string>();
-        letterRow.Add("A");
-        letterRow.Add("B");
-        letterRow.Add("C");
-        letterRow.Add("D");
-        letterRow.Add("E");
-        letterRow.Add("F");
-        letterRow.Add("G");
-        letterRow.Add("H");
-        letterRow.Add("I");
-        letterRow.Add("J");
-        letterRow.Add("K");
-        letterRow.Add("L");
-        spawnChildren(letters);
-    }
-
     /// <summary>
     /// Shuffle letters in list
     /// </summary>
@@ -143,15 +121,14 @@ public class LetterCreator : MonoBehaviour {
     private List<string> shuffleLetters(List<string> letters)
     {
         UtilsList utilsList = new UtilsList();
-        return utilsList.SchuffleList<string>(letters);
+        return utilsList.ShuffleList<string>(letters);
     }
 
-    private void spawnChildren(List<string> letters)
+    private void spawnChildren(List<string> letters, int startRowIndex)
     {
-        CanvasChildPositionHandler positionHandler = new CanvasChildPositionHandler();
         var rowCap = _coordCalculator.CountChildrenCapInEachRow();
         var columnCap = _coordCalculator.CountChildrenCapInEachColumn();
-        spawnEachChildren(letters, 3, rowCap, columnCap);
+        spawnEachChildren(letters, startRowIndex, rowCap, columnCap);
     }
 
     private void printList(List<string> letters)
@@ -175,70 +152,6 @@ public class LetterCreator : MonoBehaviour {
             str += ", ";
         }
         Debug.Log(str);
-    }
-
-    private void printDoubleList(List<List<string>> letters)
-    {
-        foreach(var i in letters)
-        {
-            var letterStr = "";
-            foreach(var j in i)
-            {
-                letterStr += j;
-                letterStr += ", ";
-            }
-            Debug.Log(letterStr);
-        }
-    }
-
-    private int countChildrenCapInEachRow()
-    {
-        return countChildrenCap(_childObject.Size.x, _childObject.Offset.x, _canvas.BoardSize.x);
-    }
-
-    private int countChildrenCapInEachColumn()
-    {
-        return countChildrenCap(_childObject.Size.y, _childObject.Offset.y, _canvas.BoardSize.y);
-    }
-
-    /// <summary>
-    /// Check how many children can be fit input parent object.
-    /// </summary>
-    /// <param name="childSize">Size of each child object</param>
-    /// <param name="childOffset">Offset for each child</param>
-    /// <param name="parentSize">Size of the parent</param>
-    /// <returns>Children count</returns>
-    private int countChildrenCap(float childSize, float childOffset, float parentSize)
-    {
-        var firstChildSpace = childSize + childOffset * 2;
-
-        var otherChildSpace = childSize + childOffset;
-
-        return countChildObjectCap(firstChildSpace, otherChildSpace, parentSize);
-    }
-
-    /// <summary>
-    /// Check how many children can be fit into parent object.
-    /// </summary>
-    /// <param name="firstObject">Size of first object spawned on the board</param>
-    /// <param name="otherObjects">Size of all other objects spawned on the board</param>
-    /// <param name="world">Size of the parent which the child objects cannot reach higher values</param>
-    /// <returns>Children count</returns>
-    private int countChildObjectCap(float firstChildSize, float otherChildrenSize, float parentSize)
-    {
-        int counter = 0;
-
-        // At least single object can fit
-        if (parentSize > firstChildSize)
-        {
-            ++counter;
-
-            // Leave out allocated part of the board and calculate for the rest
-            var boardSizeLeftover = parentSize - firstChildSize;
-            return counter + (int)(boardSizeLeftover / otherChildrenSize);
-        }
-
-        return counter;
     }
 
     private void spawnEachChildren(List<string> letters, int startRow, int maxRowCap, int maxColumnCap)
@@ -342,8 +255,6 @@ public class LetterCreator : MonoBehaviour {
     private void spawnEvenRow(List<string> lettersRow, float yPos)
     {
         var midIndex = Convert.ToInt32(lettersRow.Count / 2f);
-
-        var coordIndex = 0;
         
         var leftIndex = midIndex - 1;
         var rightIndex = midIndex;
@@ -391,7 +302,7 @@ public class LetterCreator : MonoBehaviour {
 
     private void spawnRightPart(List<string> letters, int coordIndex, int xIndex, float yPos, bool isEven)
     {
-        if (letters.Count <= xIndex)
+        if (letters.Count <= xIndex || xIndex < 0)
             return;
 
         if (isEven)
@@ -406,14 +317,15 @@ public class LetterCreator : MonoBehaviour {
 
     private void spawnLeftPart(List<string> letters, int coordIndex, int xIndex, float yPos, bool isEven)
     {
-        if (0 > xIndex)
+        if (0 > xIndex || letters.Count <= xIndex)
             return;
 
         if (isEven)
             spawnLetter(letters[xIndex], getEvenRowCoords(coordIndex), yPos);
-        else
-            spawnLetter(letters[xIndex], getOddRowCoords(coordIndex), yPos);
-
+        else {
+            var oddRowCoords = getOddRowCoords(coordIndex);
+            spawnLetter(letters[xIndex], oddRowCoords, yPos);
+        }
         coordIndex += 2;
 
         spawnLeftPart(letters, coordIndex, --xIndex, yPos, isEven);
@@ -461,6 +373,7 @@ public class LetterCreator : MonoBehaviour {
         var letterIndex = _letterDictionary[letter];
         GameObject newSpawnObject = _spawnObject;
         newSpawnObject.transform.GetComponent<Image>().sprite = _sprites[letterIndex];
+        newSpawnObject.name = letter;
         var instantiate = Instantiate(newSpawnObject, new Vector3(x, y, 0), transform.rotation);
         instantiate.transform.SetParent(gameObject.transform, false);
     }

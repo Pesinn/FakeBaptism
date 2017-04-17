@@ -25,12 +25,11 @@ public class LettersContainer
         _correctLetters.Add("D");
         _correctLetters.Add("I");
         _correctLetters.Add("A");
-        /*                _correctLetters.Add("B");
-                        _correctLetters.Add("J");
-                        _correctLetters.Add("O");
-                        _correctLetters.Add("R");
-                        _correctLetters.Add("K");
-                */
+        _correctLetters.Add("B");
+        _correctLetters.Add("J");
+        _correctLetters.Add("O");
+        _correctLetters.Add("R");
+        _correctLetters.Add("K");
     }
 
     public List<string> GetCorrectName()

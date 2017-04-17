@@ -86,11 +86,10 @@
     <Compile Include="Assets\Letters\Scripts\LetterEventHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\LetterImageController.cs" />
     <Compile Include="Assets\Letters\Scripts\LettersContainer.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level1Beginning.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2Beginning.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelBeginning.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelState.cs" />
-    <Compile Include="Assets\Letters\Scripts\OnStart.cs" />
-    <Compile Include="Assets\Letters\Scripts\OnStartLevel2.cs" />
     <Compile Include="Assets\Letters\Scripts\PrepareSpawnLetter.cs" />
     <Compile Include="Assets\Letters\Scripts\Result.cs" />
     <Compile Include="Assets\Letters\Scripts\StoreHandler.cs" />

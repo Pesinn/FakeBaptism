@@ -7,21 +7,21 @@ using UnityEngine;
 /// </summary>
 public class SwapHandler : MonoBehaviour {
 
-    List<Transform> _children;
-    SwapItems swap;
+    private SwapItems _swap;
 
 	// Use this for initialization
 	void Awake () {
-        swap = new SwapItems();
-        _children = new List<Transform>();
-        _children = getChildren();
+        _swap = new SwapItems();
     }
 
     public void SwapTrigger()
     {
+        var children = new List<Transform>();
+        children = getChildren();
+
         UtilsList listHelper = new UtilsList();
-        _children = listHelper.SchuffleList<Transform>(_children);
-        swap.SwapTransformsRandomly(_children);
+        children = listHelper.ShuffleList<Transform>(children);
+        _swap.SwapTransformsRandomly(children);
     }
 
     private List<Transform> getChildren()

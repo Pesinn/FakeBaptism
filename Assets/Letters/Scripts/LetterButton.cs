@@ -10,14 +10,11 @@ public class LetterButton : MonoBehaviour {
     private LetterImageController _imageController;
     private LevelState _levelState;
     private bool isTriggered;
-    // Count how mant wrong guesses have been made
-    private int wrongCounter;
     private bool letterInProcess = false;
 
     void Awake()
     {
         isTriggered = false;
-        wrongCounter = 0;
 
         myButton = GetComponent<Button>();
         myButton.onClick.AddListener(onClickEvent);

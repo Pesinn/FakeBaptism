@@ -21,7 +21,7 @@ public class UtilsList {
     /// </summary>
     /// <param name="list">List to shuffle</param>
     /// <returns>Shuffled list</returns>
-    public List<T> SchuffleList<T>(List<T> list) where T : class
+    public List<T> ShuffleList<T>(List<T> list) where T : class
     {
         var capacity = list.Count;
         List<T> newChildren = new List<T>();

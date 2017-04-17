@@ -1,13 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinishLevel : MonoBehaviour {
 
     EvaporateHandler _evaprovateHandler;
 	// Use this for initialization
 	void Start () {
-        _evaprovateHandler = GameObject.FindGameObjectWithTag("Letters").GetComponent<EvaporateHandler>();
+        _evaprovateHandler = GameObject.FindGameObjectWithTag("MainPanel").GetComponent<EvaporateHandler>();
     }
 
     public void TriggerFinishLevel()
@@ -31,6 +31,6 @@ public class FinishLevel : MonoBehaviour {
     private IEnumerator changeLevel(float sec)
     {
         yield return new WaitForSeconds(sec);
-        Application.LoadLevel(1);
+        SceneManager.LoadScene(1);
     }
 }

@@ -14,7 +14,7 @@ public class LevelState : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _swapHandler = GameObject.FindGameObjectWithTag("Letters").GetComponent<SwapHandler>();
+        _swapHandler = GameObject.FindGameObjectWithTag("MainPanel").GetComponent<SwapHandler>();
         _finishLevel = GameObject.FindGameObjectWithTag("ResultsEventHandler").GetComponent<FinishLevel>();
         isWrongLetterCounter = 0;
     }

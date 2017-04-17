@@ -28,19 +28,24 @@ public class LetterCreator : MonoBehaviour {
     // Contains all letters that can be displayed on screen
     // We want to be able to show all letters in the English alphabet
     private Dictionary<string, int> _letterDictionary;
+    
+    private float _spawnTimer;
 
-    private bool isScriptAdded;
+    private float _spawnTimerConst;
 
     void Awake () {
         createLetterDictionary();
         getPropertiesFromSpawnObject();
         getLevelSizeLimits();
 
+        _spawnTimer = 0.0f;
+        _spawnTimerConst = 0.0f;
         _coordCalculator = new CoordCalculator(_canvasInfo, _childInfo);
     }
 
-    public void SpawnLetters(List<string> letters, int startRowIndex=0)
+    public void SpawnLetters(List<string> letters, int startRowIndex=0, float timer=1.0f)
     {
+        _spawnTimerConst = timer;
         spawnChildren(letters, startRowIndex);
     }
 
@@ -131,29 +136,6 @@ public class LetterCreator : MonoBehaviour {
         spawnEachChildren(letters, startRowIndex, rowCap, columnCap);
     }
 
-    private void printList(List<string> letters)
-    {
-        var letterStr = "";
-        Debug.Log("=========");
-        foreach(var i in letters)
-        {
-            letterStr += i;
-            letterStr += ", ";
-        }
-        Debug.Log(letterStr);
-    }
-
-    private void printFloatList(List<float> list)
-    {
-        var str = "";
-        foreach(var i in list)
-        {
-            str += i.ToString();
-            str += ", ";
-        }
-        Debug.Log(str);
-    }
-
     private void spawnEachChildren(List<string> letters, int startRow, int maxRowCap, int maxColumnCap)
     {
         List<List<string>> dividedChildren = new List<List<string>>();
@@ -210,7 +192,6 @@ public class LetterCreator : MonoBehaviour {
             }
 
             spawnSingleRow(row, yCoord);
-
             
             ++count;
         }
@@ -370,6 +351,23 @@ public class LetterCreator : MonoBehaviour {
     /// <param name="y">Y position</param>
     private void spawnLetter(string letter, float x, float y)
     {
+        if (_spawnTimerConst > 0.0f)
+        {
+            _spawnTimer += _spawnTimerConst;
+            StartCoroutine(spawnLetterOnTimer(_spawnTimer, letter, x, y));
+        }
+        else
+            spawnLetterInstantly(letter, x, y);
+    }
+
+    private IEnumerator spawnLetterOnTimer(float timer, string letter, float x, float y)
+    {
+        yield return new WaitForSeconds(timer);
+        spawnLetterInstantly(letter, x, y);
+    }
+
+    private void spawnLetterInstantly(string letter, float x, float y)
+    {
         var letterIndex = _letterDictionary[letter];
         GameObject newSpawnObject = _spawnObject;
         newSpawnObject.transform.GetComponent<Image>().sprite = _sprites[letterIndex];
@@ -377,7 +375,7 @@ public class LetterCreator : MonoBehaviour {
         var instantiate = Instantiate(newSpawnObject, new Vector3(x, y, 0), transform.rotation);
         instantiate.transform.SetParent(gameObject.transform, false);
     }
-    
+
     private void createLetterDictionary()
     {
         _letterDictionary = new Dictionary<string, int>();

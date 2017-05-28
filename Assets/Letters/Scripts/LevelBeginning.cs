@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelBeginning : MonoBehaviour {
     private GameObject _preLevel;
@@ -16,6 +17,8 @@ public class LevelBeginning : MonoBehaviour {
     private IEnumerator preLevelDuration(float sec)
     {
         yield return new WaitForSeconds(sec);
-        _preLevel.SetActive(false);
+        var currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        var nextBuildIndex = currentBuildIndex + 1;
+        SceneManager.LoadScene(nextBuildIndex);
     }
 }

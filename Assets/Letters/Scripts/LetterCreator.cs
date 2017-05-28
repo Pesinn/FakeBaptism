@@ -43,7 +43,7 @@ public class LetterCreator : MonoBehaviour {
         _coordCalculator = new CoordCalculator(_canvasInfo, _childInfo);
     }
 
-    public void SpawnLetters(List<string> letters, int startRowIndex=0, float timer=1.0f)
+    public void SpawnLetters(List<string> letters, int startRowIndex=0, float timer=0.02f)
     {
         _spawnTimerConst = timer;
         spawnChildren(letters, startRowIndex);

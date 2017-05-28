@@ -29,7 +29,7 @@ public class Level2Beginning : MonoBehaviour {
         var shuffeledNameToSpawn = shuffleLetters(nameToSpawnList);
 
         // Spawn it on the board
-        _letterCreator.SpawnLetters(shuffeledNameToSpawn);
+        _letterCreator.SpawnLetters(shuffeledNameToSpawn, 4);
     }
 
     private List<string> shuffleLetters(List<string> letters)

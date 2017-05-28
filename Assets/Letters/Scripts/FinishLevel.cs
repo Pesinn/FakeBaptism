@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class FinishLevel : MonoBehaviour {
 
     EvaporateHandler _evaprovateHandler;
+
 	// Use this for initialization
 	void Start () {
         _evaprovateHandler = GameObject.FindGameObjectWithTag("MainPanel").GetComponent<EvaporateHandler>();
@@ -31,6 +32,17 @@ public class FinishLevel : MonoBehaviour {
     private IEnumerator changeLevel(float sec)
     {
         yield return new WaitForSeconds(sec);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(GetNextLevelIndex());
+    }
+
+    private int GetNextLevelIndex()
+    {
+        var currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        var nextBuildIndex = currentBuildIndex + 1;
+        if (nextBuildIndex > SceneManager.sceneCountInBuildSettings) {
+            Debug.LogError("Trying to load scene with greated index than total scene count in current project");
+            return 0;
+        }
+        return nextBuildIndex;
     }
 }

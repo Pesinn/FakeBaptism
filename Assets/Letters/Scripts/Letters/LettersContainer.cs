@@ -22,7 +22,8 @@ public class LettersContainer
 
         _correctLetters.Add("N");
         _correctLetters.Add("A");
-        // _correctLetters.Add("D");
+        _correctLetters.Add(" ");
+        _correctLetters.Add("D");
         // _correctLetters.Add("I");
         // _correctLetters.Add("A");
         // _correctLetters.Add("B");

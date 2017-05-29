@@ -14,7 +14,6 @@ public class Level1Beginning : MonoBehaviour {
     {
         _letterContainer = new LettersContainer();
         _storeHandler = new StoreHandler();
-        _letterCreator = new LetterCreator();
         saveCorrectName();
         spawnLetters();
     }
@@ -57,7 +56,7 @@ public class Level1Beginning : MonoBehaviour {
     {
         var lettersCount = _letterCreator.GetMaximumLettersCount();
 
-        var randomLettersCount = lettersCount - getCorrectName().Length;
+        var randomLettersCount = lettersCount - getCorrectNameWithoutWhitespaces().Length;
 
         if(randomLettersCount < 0) 
             randomLettersCount *= (-1);
@@ -81,14 +80,24 @@ public class Level1Beginning : MonoBehaviour {
         return randomLetters;
     }
 
+    /// <summary>
+    /// Pick all correct letters and add them to a list.
+    /// Only letters. Skip all whitespaces.
+    /// </summary>
+    /// <returns></returns>
     private List<string> getCorrectNameList()
     {
         var returnList = new List<string>();
-        foreach(var i in getCorrectName())
+        foreach(var i in getCorrectNameWithoutWhitespaces())
         {
             returnList.Add(i.ToString());
         }
         return returnList;
+    }
+
+    private string getCorrectNameWithoutWhitespaces()
+    {
+        return getCorrectName().Replace(" ", string.Empty);
     }
 
     private string getCorrectName()

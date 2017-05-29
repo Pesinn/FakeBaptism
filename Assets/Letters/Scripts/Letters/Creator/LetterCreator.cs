@@ -371,7 +371,10 @@ public class LetterCreator : MonoBehaviour {
         var letterIndex = _letterDictionary[letter];
         GameObject newSpawnObject = _spawnObject;
         newSpawnObject.transform.GetComponent<Image>().sprite = _sprites[letterIndex];
-        newSpawnObject.name = letter;
+        if(letter != " ")
+            newSpawnObject.name = letter;
+        else
+            newSpawnObject.name = "Empty";
         var instantiate = Instantiate(newSpawnObject, new Vector3(x, y, 0), transform.rotation);
         instantiate.transform.SetParent(gameObject.transform, false);
     }
@@ -404,6 +407,7 @@ public class LetterCreator : MonoBehaviour {
         _letterDictionary.Add("X", 22);
         _letterDictionary.Add("Y", 23);
         _letterDictionary.Add("Z", 24);
+        _letterDictionary.Add(" ", 25);
     }
 
 

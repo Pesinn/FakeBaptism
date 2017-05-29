@@ -75,26 +75,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Letters\Scripts\CanvasChildPositionHandler.cs" />
-    <Compile Include="Assets\Letters\Scripts\CoordCalculator.cs" />
-    <Compile Include="Assets\Letters\Scripts\EvaporateHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\FinishLevel.cs" />
-    <Compile Include="Assets\Letters\Scripts\IUtilsList.cs" />
-    <Compile Include="Assets\Letters\Scripts\LetterButton.cs" />
-    <Compile Include="Assets\Letters\Scripts\LetterClickDetector.cs" />
-    <Compile Include="Assets\Letters\Scripts\LetterCreator.cs" />
-    <Compile Include="Assets\Letters\Scripts\LetterEventHandler.cs" />
-    <Compile Include="Assets\Letters\Scripts\LetterImageController.cs" />
-    <Compile Include="Assets\Letters\Scripts\LettersContainer.cs" />
-    <Compile Include="Assets\Letters\Scripts\Level1Beginning.cs" />
-    <Compile Include="Assets\Letters\Scripts\Level2Beginning.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\Creator\CanvasChildPositionHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\Creator\CoordCalculator.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\Creator\LetterCreator.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\EvaporateHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\LetterButton.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\LetterClickDetector.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\LetterEventHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\LetterImageController.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\LettersContainer.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level1\Level1Beginning.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level2\Level2Beginning.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelBeginning.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelState.cs" />
     <Compile Include="Assets\Letters\Scripts\Result.cs" />
-    <Compile Include="Assets\Letters\Scripts\StoreHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\Services\StoreHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\SwapHandler.cs" />
-    <Compile Include="Assets\Letters\Scripts\SwapItems.cs" />
-    <Compile Include="Assets\Letters\Scripts\UtilsList.cs" />
+    <Compile Include="Assets\Letters\Scripts\Utils\IUtilsList.cs" />
+    <Compile Include="Assets\Letters\Scripts\Utils\SwapItems.cs" />
+    <Compile Include="Assets\Letters\Scripts\Utils\UtilsList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\HD-2D Background Art Wonderland\Readme.txt" />

@@ -13,12 +13,8 @@ public class Level2Beginning : MonoBehaviour {
         _storeHandler = new StoreHandler();
 
         spawnLetters();
+        spawnEmptyCubes();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     private void spawnLetters()
     {
@@ -29,7 +25,22 @@ public class Level2Beginning : MonoBehaviour {
         var shuffeledNameToSpawn = shuffleLetters(nameToSpawnList);
 
         // Spawn it on the board
-        _letterCreator.SpawnLetters(shuffeledNameToSpawn, 4);
+        _letterCreator.SpawnLetters(shuffeledNameToSpawn, 3);
+    }
+
+    private void spawnEmptyCubes()
+    {
+        List<string> emptyStrings = new List<string>();
+
+        // Create as many empty as they are suppose to be
+        emptyStrings.Add(" ");
+        emptyStrings.Add(" ");
+        emptyStrings.Add(" ");
+        emptyStrings.Add(" ");
+        emptyStrings.Add(" ");
+        emptyStrings.Add(" ");
+
+        _letterCreator.SpawnLetters(emptyStrings, 0, 0.1f);
     }
 
     private List<string> shuffleLetters(List<string> letters)

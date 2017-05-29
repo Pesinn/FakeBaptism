@@ -3,12 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelBeginning : MonoBehaviour {
-    private GameObject _preLevel;
     private LettersContainer _letterContainer;
-
-    void Awake() {
-        _preLevel = GameObject.FindGameObjectWithTag("PreLevel");
-    }
 
     void Start() {
         StartCoroutine(preLevelDuration(3f));

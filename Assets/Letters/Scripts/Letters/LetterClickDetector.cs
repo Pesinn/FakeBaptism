@@ -11,9 +11,6 @@ public class LetterClickDetector : MonoBehaviour {
         container = new LettersContainer();
     }
 
-    void Start () {
-	}
-
     public Result LetterAction(LetterAction e) {
         return e.StartLetterProcess(container);
     }

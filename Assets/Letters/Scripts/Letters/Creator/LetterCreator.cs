@@ -404,10 +404,11 @@ public class LetterCreator : MonoBehaviour {
         _letterDictionary.Add("T", 19);
         _letterDictionary.Add("U", 20);
         _letterDictionary.Add("V", 21);
-        _letterDictionary.Add("X", 22);
-        _letterDictionary.Add("Y", 23);
-        _letterDictionary.Add("Z", 24);
-        _letterDictionary.Add(" ", 25);
+        _letterDictionary.Add("W", 22);
+        _letterDictionary.Add("X", 23);
+        _letterDictionary.Add("Y", 24);
+        _letterDictionary.Add("Z", 25);
+        _letterDictionary.Add(" ", 26);
     }
 
 

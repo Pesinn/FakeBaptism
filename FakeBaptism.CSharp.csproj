@@ -86,6 +86,7 @@
     <Compile Include="Assets\Letters\Scripts\Letters\LetterImageController.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\LettersContainer.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Level1Beginning.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level2\DragHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\Level2Beginning.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelBeginning.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelState.cs" />

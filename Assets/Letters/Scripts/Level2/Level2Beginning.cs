@@ -12,19 +12,19 @@ public class Level2Beginning : MonoBehaviour {
     void Awake () {
         var mainPanelTransform = GameObject.FindGameObjectWithTag("MainPanel").transform;
 
-        var nameSpawnerGameObject = mainPanelTransform.FindChild("NameSpawner");
-        _letterCreator = nameSpawnerGameObject.GetComponent<LetterCreator>();
+        //var nameSpawnerGameObject = mainPanelTransform.FindChild("NameSpawner");
+        //_letterCreator = nameSpawnerGameObject.GetComponent<LetterCreator>();
 
         var emptySpawnerGameObject = mainPanelTransform.FindChild("EmptySpawner");
         _emptyLetterCreator = emptySpawnerGameObject.GetComponent<LetterCreator>();
 
         _storeHandler = new StoreHandler();
 
-        spawnLetters();
+        //spawnLetters();
         spawnEmptyCubes();
     }
 
-    private void spawnLetters()
+/*    private void spawnLetters()
     {
         // Load name list
         var nameToSpawnList = _storeHandler.LoadNameList();
@@ -35,7 +35,7 @@ public class Level2Beginning : MonoBehaviour {
         // Spawn it on the board
         _letterCreator.SpawnLetters(shuffeledNameToSpawn, 3);
     }
-
+    */
     private void spawnEmptyCubes()
     {
         List<string> emptyStrings = new List<string>();

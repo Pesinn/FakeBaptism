@@ -60,8 +60,6 @@ public class CanvasObject
 public class CoordCalculator {
     private CanvasObject _canvas;
     private ChildObject _childObject;
-    private string _canvasTag;
-
 
     private List<float> _evenRowCoords;
     private List<float> _oddRowCoords;
@@ -197,7 +195,6 @@ public class CoordCalculator {
         if (!isInsideCanvas(x, 0.0f)) return;
 
         addXCoords(x, isEven);
-
         if (x == 0)
             calculateRowCoords(createNewXPositionLeft(x), isEven);
         else

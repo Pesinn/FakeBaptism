@@ -84,18 +84,24 @@
     <Compile Include="Assets\Letters\Scripts\Letters\LetterClickDetector.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\LetterEventHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\LetterImageController.cs" />
+    <Compile Include="Assets\Letters\Scripts\Letters\LetterSprites.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\LettersContainer.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Level1Beginning.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level2\CreateLetter.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\DragHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level2\Letter.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\Level2Beginning.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level2\SpawnLetter.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelBeginning.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelState.cs" />
+    <Compile Include="Assets\Letters\Scripts\ObjectSize.cs" />
     <Compile Include="Assets\Letters\Scripts\Result.cs" />
     <Compile Include="Assets\Letters\Scripts\Services\StoreHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\SwapHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Utils\IUtilsList.cs" />
     <Compile Include="Assets\Letters\Scripts\Utils\SwapItems.cs" />
     <Compile Include="Assets\Letters\Scripts\Utils\UtilsList.cs" />
+    <Compile Include="Assets\Slot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\HD-2D Background Art Wonderland\Readme.txt" />

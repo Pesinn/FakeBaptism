@@ -89,7 +89,10 @@
     <Compile Include="Assets\Letters\Scripts\Level1\Level1Beginning.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\CreateLetter.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\DragHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level2\LetterImageColor.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\Level2Beginning.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level2\NameValidator.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level2\Slot.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\SpawnLetter.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelBeginning.cs" />
     <Compile Include="Assets\Letters\Scripts\LevelState.cs" />
@@ -100,7 +103,6 @@
     <Compile Include="Assets\Letters\Scripts\Utils\IUtilsList.cs" />
     <Compile Include="Assets\Letters\Scripts\Utils\SwapItems.cs" />
     <Compile Include="Assets\Letters\Scripts\Utils\UtilsList.cs" />
-    <Compile Include="Assets\Slot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\HD-2D Background Art Wonderland\Readme.txt" />

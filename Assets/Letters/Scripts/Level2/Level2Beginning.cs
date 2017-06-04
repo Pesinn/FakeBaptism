@@ -47,7 +47,7 @@ public class Level2Beginning : MonoBehaviour {
     private void spawnEmptyCubes(SpawnLetter spawnLetters, LetterSprites letterSprites)
     {
         spawnLetters.SetSprites(letterSprites);
-        spawnLetters.SpawnSlot(_name.Count);
+        spawnLetters.SpawnSlot(_name);
     }
 
     private List<string> shuffleLetters(List<string> letters)

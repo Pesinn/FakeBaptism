@@ -70,9 +70,9 @@ public class SpawnLetter : MonoBehaviour {
             Debug.LogError("No letters to spawn");
     }
 
-    public void SpawnSlot(int count)
+    public void SpawnSlot(List<string> letters)
     {
-        spawnSlot(count);
+        spawnSlot(letters);
     }
 
     private void spawnGameObject(List<string> letters)
@@ -82,16 +82,18 @@ public class SpawnLetter : MonoBehaviour {
         foreach(var i in letters)
         {
             newGameObject.transform.GetChild(0).GetComponent<Image>().sprite = _letterSprites.GetSprite(i);
-            spawn(newGameObject).name = i + counter.ToString();
+            var obj = spawn(newGameObject);
+            obj.name = i + counter.ToString();
+            obj.transform.GetChild(0).name = i;
             ++counter;
         }
     }
 
-    private void spawnSlot(int count)
+    private void spawnSlot(List<string> letters)
     {
         GameObject newGameObject = _gameObject;
-        for(var i = 0; i < count; i++)
-            spawn(newGameObject).name = "Slot";
+        foreach(var i in letters)
+            spawn(newGameObject).name = i;
     }
 
     private GameObject spawn(GameObject obj)

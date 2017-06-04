@@ -17,7 +17,7 @@ public class LetterSprites : MonoBehaviour {
 
     public Sprite GetSprite(string letter, string color = "yellow_black")
     {
-        if(color == "black_white")        
+        if(color == "black_white")
             return _blackWhiteSprites[_letterDictionary[letter]];
         return _yellowBlackSprites[_letterDictionary[letter]];
     }

@@ -4,49 +4,50 @@ using UnityEngine;
 
 public class Level2Beginning : MonoBehaviour {
 
-    private LetterCreator _letterCreator;
-    private LetterCreator _emptyLetterCreator;
     private StoreHandler _storeHandler;
+    private LetterSprites _letterSprites;
+
+    private List<string> _name;
 
     // Use this for initialization
-    void Awake () {
+    void Start () {
+        var letterSprites = GameObject.FindGameObjectWithTag("LetterSprites").GetComponent<LetterSprites>();
+
         var mainPanelTransform = GameObject.FindGameObjectWithTag("MainPanel").transform;
 
-        //var nameSpawnerGameObject = mainPanelTransform.FindChild("NameSpawner");
-        //_letterCreator = nameSpawnerGameObject.GetComponent<LetterCreator>();
+        var nameSpawnerGameObject = mainPanelTransform.FindChild("Letters");
+        var spawnLettersScript = nameSpawnerGameObject.GetComponent<SpawnLetter>();
 
-        var emptySpawnerGameObject = mainPanelTransform.FindChild("EmptySpawner");
-        _emptyLetterCreator = emptySpawnerGameObject.GetComponent<LetterCreator>();
+        var emptySpawnerGameObject = mainPanelTransform.FindChild("Slots");
+        var spawnEmptyScript = emptySpawnerGameObject.GetComponent<SpawnLetter>();
 
         _storeHandler = new StoreHandler();
 
-        //spawnLetters();
-        spawnEmptyCubes();
+        spawnLetters(spawnLettersScript, letterSprites);
+        spawnEmptyCubes(spawnEmptyScript, letterSprites);
     }
 
-/*    private void spawnLetters()
+    private void spawnLetters(SpawnLetter spawnLettersScript, LetterSprites letterSprites)
     {
+        // Set sprites in SpawnLetter script
+        spawnLettersScript.SetSprites(letterSprites);
+
         // Load name list
         var nameToSpawnList = _storeHandler.LoadNameList();
+
+        _name = nameToSpawnList;
 
         // Shuffle name
         var shuffeledNameToSpawn = shuffleLetters(nameToSpawnList);
 
         // Spawn it on the board
-        _letterCreator.SpawnLetters(shuffeledNameToSpawn, 3);
+        spawnLettersScript.SpawnLetters(shuffeledNameToSpawn);
     }
-    */
-    private void spawnEmptyCubes()
+
+    private void spawnEmptyCubes(SpawnLetter spawnLetters, LetterSprites letterSprites)
     {
-        List<string> emptyStrings = new List<string>();
-
-        var name = _storeHandler.LoadName();
-
-        // Create one empty character for each letter
-        foreach(var i in name)
-            emptyStrings.Add(" ");
-
-        _emptyLetterCreator.SpawnLetters(emptyStrings, 0, 0.1f);
+        spawnLetters.SetSprites(letterSprites);
+        spawnLetters.SpawnSlot(_name.Count);
     }
 
     private List<string> shuffleLetters(List<string> letters)

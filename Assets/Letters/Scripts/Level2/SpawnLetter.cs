@@ -6,46 +6,73 @@ using UnityEngine.UI;
 public class SpawnLetter : MonoBehaviour {
     public GameObject _gameObject;
 
-    public List<string> _letters;
+    private List<string> _letters;
 
     private LetterSprites _letterSprites;
 
 	void Start () {
-        _letters = new List<string>();
+        /*       _letters = new List<string>();
 
-        _letters.Add("A");
-        _letters.Add("B");
-        _letters.Add("C");
-        _letters.Add("D");
-        _letters.Add("E");
-        _letters.Add("F");
-        _letters.Add("A");
-        _letters.Add("B");
-        _letters.Add("C");
-        _letters.Add("D");
-        _letters.Add("E");
-        _letters.Add("F");
-        _letters.Add("A");
-        _letters.Add("B");
-        _letters.Add("C");
-        _letters.Add("D");
-        _letters.Add("E");
-        _letters.Add("F");
-        _letters.Add("A");
-        _letters.Add("B");
-        _letters.Add("C");
-        _letters.Add("D");
-        _letters.Add("E");
-        _letters.Add("F");
-
-        _letterSprites = GameObject.FindGameObjectWithTag("LetterSprites").GetComponent<LetterSprites>();
-
-        SpawnLetters(_letters);
+            _letters.Add("A");
+            _letters.Add("B");
+            _letters.Add("C");
+            _letters.Add("D");
+            _letters.Add("E");
+            _letters.Add("F");
+            _letters.Add("A");
+            _letters.Add("B");
+            _letters.Add("C");
+            _letters.Add("D");
+            _letters.Add("E");
+            _letters.Add("F");
+            _letters.Add("A");
+            _letters.Add("B");
+            _letters.Add("C");
+            _letters.Add("D");
+            _letters.Add("E");
+            _letters.Add("F");
+            _letters.Add("A");
+            _letters.Add("B");
+            _letters.Add("C");
+            _letters.Add("D");
+            _letters.Add("E");
+            _letters.Add("F");
+            _letters.Add("F");
+            _letters.Add("A");
+            _letters.Add("B");
+            _letters.Add("C");
+            _letters.Add("D");
+            _letters.Add("E");
+            _letters.Add("F");
+            _letters.Add("A");
+            _letters.Add("B");
+            _letters.Add("C");
+            _letters.Add("D");
+            _letters.Add("E");
+            _letters.Add("F");
+            _letters.Add("E");
+            _letters.Add("F");
+            */
+        
+//        SpawnLetters(_letters);
     }
-	
+
+    public void SetSprites(LetterSprites letterSprites)
+    {
+        _letterSprites = letterSprites;
+    }
+
     public void SpawnLetters(List<string> letters)
     {
-        spawnGameObject(letters);
+        if (letters.Count > 0)
+            spawnGameObject(letters);
+        else
+            Debug.LogError("No letters to spawn");
+    }
+
+    public void SpawnSlot(int count)
+    {
+        spawnSlot(count);
     }
 
     private void spawnGameObject(List<string> letters)
@@ -54,11 +81,23 @@ public class SpawnLetter : MonoBehaviour {
         GameObject newGameObject = _gameObject;
         foreach(var i in letters)
         {
-            newGameObject.name = i + counter.ToString();
             newGameObject.transform.GetChild(0).GetComponent<Image>().sprite = _letterSprites.GetSprite(i);
-            var instantiate = Instantiate(newGameObject, new Vector3(0, 0, 0), transform.rotation);
-            instantiate.transform.SetParent(gameObject.transform, false);
+            spawn(newGameObject).name = i + counter.ToString();
             ++counter;
         }
+    }
+
+    private void spawnSlot(int count)
+    {
+        GameObject newGameObject = _gameObject;
+        for(var i = 0; i < count; i++)
+            spawn(newGameObject).name = "Slot";
+    }
+
+    private GameObject spawn(GameObject obj)
+    {
+        var instantiate = Instantiate(obj, new Vector3(0, 0, 0), transform.rotation);
+        instantiate.transform.SetParent(gameObject.transform, false);
+        return instantiate;
     }
 }

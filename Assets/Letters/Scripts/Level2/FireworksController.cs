@@ -20,8 +20,9 @@ public class FireworksController : MonoBehaviour {
 
             var instantiate = Instantiate(Fireworks[0], new Vector3(randomX, randomY, 0), Quaternion.identity);
             instantiate.transform.SetParent(gameObject.transform, false);
+            instantiate.name = "Fireworks";
 
-            StartCoroutine(destroyFirework(instantiate, 5f));
+            //StartCoroutine(destroyFirework(instantiate, 5f));
         }
     }
 

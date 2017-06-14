@@ -22,8 +22,15 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler {
             DragHandler.itemBeingDragged.transform.SetParent(transform);
 
             if (transform.parent.name == "Slots")
-                transform.parent.GetComponent<NameValidator>().ValidateName();
+                validateName();
         }
+    }
+
+    private void validateName()
+    {
+        var validation = transform.parent.GetComponent<NameValidator>().ValidateName();
+        if (validation)
+            GameObject.FindGameObjectWithTag("OnEnd").GetComponent<FinishLevel2>().FinishLevel();
     }
    
     public void OnPointerClick(PointerEventData eventData)

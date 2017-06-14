@@ -10,53 +10,6 @@ public class SpawnLetter : MonoBehaviour {
 
     private LetterSprites _letterSprites;
 
-	void Start () {
-        /*       _letters = new List<string>();
-
-            _letters.Add("A");
-            _letters.Add("B");
-            _letters.Add("C");
-            _letters.Add("D");
-            _letters.Add("E");
-            _letters.Add("F");
-            _letters.Add("A");
-            _letters.Add("B");
-            _letters.Add("C");
-            _letters.Add("D");
-            _letters.Add("E");
-            _letters.Add("F");
-            _letters.Add("A");
-            _letters.Add("B");
-            _letters.Add("C");
-            _letters.Add("D");
-            _letters.Add("E");
-            _letters.Add("F");
-            _letters.Add("A");
-            _letters.Add("B");
-            _letters.Add("C");
-            _letters.Add("D");
-            _letters.Add("E");
-            _letters.Add("F");
-            _letters.Add("F");
-            _letters.Add("A");
-            _letters.Add("B");
-            _letters.Add("C");
-            _letters.Add("D");
-            _letters.Add("E");
-            _letters.Add("F");
-            _letters.Add("A");
-            _letters.Add("B");
-            _letters.Add("C");
-            _letters.Add("D");
-            _letters.Add("E");
-            _letters.Add("F");
-            _letters.Add("E");
-            _letters.Add("F");
-            */
-        
-//        SpawnLetters(_letters);
-    }
-
     public void SetSprites(LetterSprites letterSprites)
     {
         _letterSprites = letterSprites;

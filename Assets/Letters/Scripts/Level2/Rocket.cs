@@ -29,5 +29,9 @@ public class Rocket : MonoBehaviour {
         var main = particleSystem.main;
 
         main.startColor = gradient;
+
+//        var rand = Random.Range(0, 10);
+//        Debug.Log(rand + " " + Time.time);
+//        main.startDelay = rand;
     }
 }

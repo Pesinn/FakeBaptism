@@ -8,12 +8,16 @@ public class NameValidator : MonoBehaviour {
 
     List<bool> _result;
 
-    public void ValidateName()
+    /// <summary>
+    /// Validates if correct name has been picked
+    /// </summary>
+    /// <returns>true if correct name has been picked</returns>
+    public bool ValidateName()
     {
-        validateEachChildren();
+        return validateEachChildren();
     }
 
-    private void validateEachChildren()
+    private bool validateEachChildren()
     {
         _result = new List<bool>();
         
@@ -26,6 +30,8 @@ public class NameValidator : MonoBehaviour {
         // When validate list is false, we have correct name
         if (!validateList)
             executeOnEachChild(setLetterSuccess);
+
+        return !validateList;
     }
 
     /// <summary>

@@ -42,7 +42,7 @@ public class FireworksController : MonoBehaviour {
         var height = canvas.rect.height;
         var width = canvas.rect.width;
 
-        float offset = 100f;
+        float offset = 300f;
 
         _minY = (-1) * (height / 2f);
         _minY += offset;

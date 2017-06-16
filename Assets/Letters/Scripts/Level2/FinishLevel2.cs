@@ -4,18 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FinishLevel2 : MonoBehaviour {
-    public Sprite EndBackground;
-
-	// Use this for initialization
-	void Start () {
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void FinishLevel()
     {
         var panel = GameObject.FindGameObjectWithTag("MainPanel");

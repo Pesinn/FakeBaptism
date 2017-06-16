@@ -55,8 +55,6 @@ public class FireworksController : MonoBehaviour {
 
         _maxX = width / 2f;
         _maxX -= offset;
-
-        Debug.Log(_minX + " " + _maxX);
     }
 
     private GameObject FindCanvas()

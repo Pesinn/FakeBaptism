@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Letters\Scripts\Choose\LevelChooseStart.cs" />
     <Compile Include="Assets\Letters\Scripts\FinishLevel.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\Creator\CanvasChildPositionHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\Creator\CoordCalculator.cs" />

@@ -111,13 +111,6 @@ public class LetterButton : MonoBehaviour {
         }
     }
 
-    private void LogThatFuckingResult(Result res)
-    {
-        Debug.Log("==================");
-        Debug.Log("Action: " + res.Action + " Inner Text: " + res.InnerText + " isCorrectLetter: " + res.isCorrectLetter + " isCorrectName: " + res.isCorrectName
-            + " istriggeredLetter: " + res.isTriggeredLetter + " Letter: " + res.Letter + " Status: " + res.Status + " Test: " + res.Text);
-    }
-
     /// <summary>
     /// Let level state know that it can process any
     /// changes necessary.

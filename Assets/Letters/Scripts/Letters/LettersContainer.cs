@@ -9,8 +9,9 @@ public class LettersContainer
     private List<string> _correctChoosenLetters;
     private List<string> _choosenLetters;
     private List<string> _correctLetters;
-
+    private StoreHandler _storeHandler;
     private Result _containerStatus;
+    private bool isDebug = true;
 
     public LettersContainer()
     {
@@ -20,44 +21,19 @@ public class LettersContainer
 
         _containerStatus = new Result();
 
-        _correctLetters.Add("N");
-        _correctLetters.Add("A");
-        _correctLetters.Add("D");
-        // _correctLetters.Add("I");
-        // _correctLetters.Add("A");
-        //        _correctLetters.Add(" ");
-        //        _correctLetters.Add("B");
-        //        _correctLetters.Add("J");
-        //        _correctLetters.Add("O");
-        //        _correctLetters.Add("R");
-        //        _correctLetters.Add("K");
+        if (isDebug)
+        {
+            _correctLetters.Add("P");
+            _correctLetters.Add("E");
+            _correctLetters.Add("Z");
+        }
+        else
+            _correctLetters = _storeHandler.LoadNameList();
     }
 
     public List<string> GetCorrectName()
     {
         return _correctLetters;
-    }
-
-    public List<string> GetChoosenLetters()
-    {
-        return _correctChoosenLetters;
-    }
-
-    public string GetListAsString(string name, List<string> list)
-    {
-        var str = "";
-        var index = 0;
-        foreach (var i in list)
-        {
-            if (index > 0)
-            {
-                str += ",";
-            }
-            str += i;
-            index++;
-        }
-        Debug.Log(name + ": " + str);
-        return str;
     }
 
     public Result PickLetter(string letter)

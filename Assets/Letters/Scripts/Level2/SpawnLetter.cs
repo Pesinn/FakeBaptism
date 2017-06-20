@@ -15,6 +15,10 @@ public class SpawnLetter : MonoBehaviour {
         _letterSprites = letterSprites;
     }
 
+    /// <summary>
+    /// Spawn list of letters
+    /// </summary>
+    /// <param name="letters">List of letters to spawn</param>
     public void SpawnLetters(List<string> letters)
     {
         if (letters.Count > 0)

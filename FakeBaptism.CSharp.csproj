@@ -76,6 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Letters\Scripts\Choose\LevelChooseStart.cs" />
+    <Compile Include="Assets\Letters\Scripts\Choose\NameLetter.cs" />
+    <Compile Include="Assets\Letters\Scripts\Choose\NameValidator.cs" />
+    <Compile Include="Assets\Letters\Scripts\Choose\PickHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\Choose\SpawnName.cs" />
+    <Compile Include="Assets\Letters\Scripts\Choose\SpawnPickLetter.cs" />
     <Compile Include="Assets\Letters\Scripts\FinishLevel.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\Creator\CanvasChildPositionHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\Creator\CoordCalculator.cs" />

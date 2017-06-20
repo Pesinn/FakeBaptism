@@ -6,6 +6,8 @@ public class LetterSprites : MonoBehaviour {
     private Dictionary<string, int> _letterDictionary;
 
     public List<Sprite> _yellowBlackSprites;
+    public List<Sprite> _yellowYellowSprites;
+    public List<Sprite> _yellowWhiteSprites;
     public List<Sprite> _blackWhiteSprites;
 
     public Dictionary<List<Sprite>, int> _spriteList;
@@ -19,6 +21,10 @@ public class LetterSprites : MonoBehaviour {
     {
         if(color == "black_white")
             return _blackWhiteSprites[_letterDictionary[letter]];
+        if(color == "yellow_yellow")
+            return _yellowYellowSprites[_letterDictionary[letter]];
+        if (color == "yellow_white")
+            return _yellowWhiteSprites[_letterDictionary[letter]];
         return _yellowBlackSprites[_letterDictionary[letter]];
     }
 

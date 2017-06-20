@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Level2;
 
 public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler {
 
@@ -28,7 +29,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler {
 
     private void validateName()
     {
-        var validation = transform.parent.GetComponent<NameValidator>().ValidateName();
+        var validation = transform.parent.GetComponent<Level2.NameValidator>().ValidateName();
         if (validation)
             GameObject.FindGameObjectWithTag("OnEnd").GetComponent<FinishLevel2>().FinishLevel();
     }

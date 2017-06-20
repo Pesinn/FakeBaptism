@@ -13,13 +13,13 @@ public class LevelChooseStart : MonoBehaviour
         var mainPanelTransform = GameObject.FindGameObjectWithTag("MainPanel").transform;
 
         var nameSpawnerGameObject = mainPanelTransform.FindChild("Constants");
-        var spawnLettersScript = nameSpawnerGameObject.GetComponent<SpawnLetter>();
+        var spawnLettersScript = nameSpawnerGameObject.GetComponent<SpawnPickLetter>();
 
         spawnLetters(spawnLettersScript, letterSprites);
     }
 
 
-    private void spawnLetters(SpawnLetter spawnLettersScript, LetterSprites letterSprites)
+    private void spawnLetters(SpawnPickLetter spawnLettersScript, LetterSprites letterSprites)
     {
         spawnLettersScript.SetSprites(letterSprites);
 

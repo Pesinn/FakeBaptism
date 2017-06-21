@@ -11,7 +11,7 @@ public class LettersContainer
     private List<string> _correctLetters;
     private StoreHandler _storeHandler;
     private Result _containerStatus;
-    private bool isDebug = true;
+    private bool isDebug = false;
 
     public LettersContainer()
     {
@@ -20,6 +20,7 @@ public class LettersContainer
         _correctLetters = new List<string>();
 
         _containerStatus = new Result();
+        _storeHandler = new StoreHandler();
 
         if (isDebug)
         {

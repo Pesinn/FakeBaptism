@@ -13,15 +13,25 @@ public class NameLetter : MonoBehaviour, IPointerClickHandler {
     {
         _parent = transform.parent.gameObject;
 
-        _nameValidator = _parent.GetComponent<NameValidator>();
+        gameObject.SetActive(false);
 
-        string name = gameObject.name.ToString();
-        _nameValidator.AddGameObject(gameObject);
+        _nameValidator = _parent.GetComponent<NameValidator>();
+        if(!_nameValidator.isNameFull())
+            addLetter();
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        Destroy(gameObject);
+        if (!_nameValidator.isNameEmpty())
+            _nameValidator.RemoveGameObject(gameObject);
+        else
+            Debug.LogError("Name letter game object destroyed but the name validator is empty");
 
-        _nameValidator.RemoveGameObject(gameObject);
+        Destroy(gameObject);
+    }
+
+    private void addLetter()
+    {
+        _nameValidator.AddGameObject(gameObject);
+        gameObject.SetActive(true);
     }
 }

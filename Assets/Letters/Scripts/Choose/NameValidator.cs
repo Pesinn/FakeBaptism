@@ -6,31 +6,64 @@ namespace Choose
 {
     public class NameValidator : MonoBehaviour {
 
-        // Max number is 39
         private List<GameObject> _gameObjects;
+        private NameLetterStorage _storeHandler;
+        private const int MAX = 39;
 
         void Start()
         {
             _gameObjects = new List<GameObject>();
+            _storeHandler = new NameLetterStorage();
+
+            handleContinueButton();
+        }
+
+        public bool isNameFull()
+        {
+            if (_gameObjects.Count >= MAX)
+                return true;
+            return false;
+        }
+
+        public bool isNameEmpty()
+        {
+            if (_gameObjects.Count <= 0)
+                return true;
+            return false;
         }
 
         public void AddGameObject(GameObject gObject)
         {
-            _gameObjects.Add(gObject);
+            if (_gameObjects.Count >= MAX)
+                Debug.LogWarning("Maximum number of letters already picked");
+            else
+            {
+                _gameObjects.Add(gObject);
+                handleContinueButton();
+            }
         }
 
         public void RemoveGameObject(GameObject gObject)
         {
-            _gameObjects.Remove(gObject);
+            if (_gameObjects.Count > 0) {
+                _gameObjects.Remove(gObject);
+                handleContinueButton();
+            }
+            else
+                Debug.LogWarning("Trying to remove object in a empty list");
         }
 
-        private void Deb()
+        private void handleContinueButton()
         {
+            GameObject.Find("/Canvas/Panel/Continue/Button").GetComponent<ButtonCharm>().ButtonChanges(_gameObjects.Count);
+        }
+
+        public void SaveNewName()
+        {
+            var nameList = new List<string>();
             foreach(var i in _gameObjects)
-            {
-                Debug.Log(i);
-            }
-            Debug.Log("=====");
+                nameList .Add(i.name.Substring(0, 1));
+            _storeHandler.SetName(nameList);
         }
     }
 }

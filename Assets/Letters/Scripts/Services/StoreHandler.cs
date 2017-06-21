@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class StoreHandler {
@@ -7,6 +8,16 @@ public class StoreHandler {
     public void SaveName(string name)
     {
         PlayerPrefs.SetString("name", name);
+    }
+
+    public void SaveName(List<string> name)
+    {
+        StringBuilder str = new StringBuilder();
+
+        foreach (var i in name)
+            str.Append(i);
+
+        PlayerPrefs.SetString("name", str.ToString());
     }
 
     public string LoadName()

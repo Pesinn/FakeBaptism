@@ -75,8 +75,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Letters\Scripts\Choose\ButtonCharm.cs" />
+    <Compile Include="Assets\Letters\Scripts\Choose\ButtonController.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\LevelChooseStart.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\NameLetter.cs" />
+    <Compile Include="Assets\Letters\Scripts\Choose\NameLetterStorage.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\NameValidator.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\PickHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\SpawnName.cs" />

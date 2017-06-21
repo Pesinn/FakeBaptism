@@ -11,7 +11,6 @@ public class LettersContainer
     private List<string> _correctLetters;
     private StoreHandler _storeHandler;
     private Result _containerStatus;
-    private bool isDebug = false;
 
     public LettersContainer()
     {
@@ -22,14 +21,7 @@ public class LettersContainer
         _containerStatus = new Result();
         _storeHandler = new StoreHandler();
 
-        if (isDebug)
-        {
-            _correctLetters.Add("P");
-            _correctLetters.Add("E");
-            _correctLetters.Add("Z");
-        }
-        else
-            _correctLetters = _storeHandler.LoadNameList();
+        _correctLetters = _storeHandler.LoadNameListWithoutSpace();
     }
 
     public List<string> GetCorrectName()
@@ -60,9 +52,6 @@ public class LettersContainer
 
         if (isCorrectName())
             _containerStatus.isCorrectName = true;
-
-        // GetListAsString("_correctChoosenLetters", _correctChoosenLetters);
-        // GetListAsString("_choosenLetters", _choosenLetters);
 
         return _containerStatus;
     }

@@ -16,6 +16,16 @@ public class UtilsList {
         }
     }
 
+    public List<string> StringToList(string str)
+    {
+        List<string> returnList = new List<string>();
+
+        foreach (var i in str)
+            returnList.Add(i.ToString());
+
+        return returnList;
+    }
+
     /// <summary>
     /// Shuffle list randomly
     /// </summary>

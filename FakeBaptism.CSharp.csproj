@@ -84,6 +84,7 @@
     <Compile Include="Assets\Letters\Scripts\Choose\PickHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\SpawnName.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\SpawnPickLetter.cs" />
+    <Compile Include="Assets\Letters\Scripts\ConstName\SaveConstName.cs" />
     <Compile Include="Assets\Letters\Scripts\FinishLevel.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\Creator\CanvasChildPositionHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Letters\Creator\CoordCalculator.cs" />

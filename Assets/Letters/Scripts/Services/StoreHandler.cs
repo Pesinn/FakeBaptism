@@ -1,10 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class StoreHandler {
 
+    private UtilsList _utilsList;
+
+    public StoreHandler()
+    {
+        _utilsList = new UtilsList();
+    }
     public void SaveName(string name)
     {
         PlayerPrefs.SetString("name", name);
@@ -27,15 +36,26 @@ public class StoreHandler {
 
     public List<string> LoadNameList()
     {
-        List<string> returnList = new List<string>();
         var nameString = loadName();
 
-        foreach(var i in nameString)
-        {
-            returnList.Add(i.ToString());
-        }
+        return _utilsList.StringToList(nameString);
+    }
 
-        return returnList;
+    public List<string> LoadNameListWithoutSpace()
+    {
+        var nameString = LoadNameWithoutSpace();
+        return _utilsList.StringToList(nameString);
+    }
+
+    public string LoadNameWithoutSpace()
+    {
+        var name = loadName();
+        
+        name = new string(name.ToCharArray()
+        .Where(c => !Char.IsWhiteSpace(c))
+        .ToArray());
+        
+        return name;
     }
 
     private string loadName()

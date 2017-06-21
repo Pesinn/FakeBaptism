@@ -10,11 +10,6 @@ public class EvaporateHandler : MonoBehaviour {
 	void Start () {
         _children = getChildren();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void HideAllUnPickedLetters()
     {

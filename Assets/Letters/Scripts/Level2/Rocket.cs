@@ -23,8 +23,6 @@ public class Rocket : MonoBehaviour {
 
         gradient.SetKeys(gck, gak);
 
-        var startColor = new ParticleSystem.MinMaxGradient(gradient);
-
         var particleSystem = this.GetComponent<ParticleSystem>();
         var main = particleSystem.main;
 

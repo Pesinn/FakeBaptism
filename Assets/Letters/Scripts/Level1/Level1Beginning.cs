@@ -6,13 +6,11 @@ using UnityEngine;
 
 public class Level1Beginning : MonoBehaviour {
     private LetterCreator _letterCreator;
-    private LettersContainer _letterContainer;
     private StoreHandler _storeHandler;
 
     // Use this for initialization
     void Awake()
     {
-        _letterContainer = new LettersContainer();
         _storeHandler = new StoreHandler();
         spawnLetters();
     }

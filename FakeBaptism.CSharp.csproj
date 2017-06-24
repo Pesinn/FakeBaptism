@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Letters\Scripts\Audio\AudioMaster.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\ButtonCharm.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\ButtonController.cs" />
     <Compile Include="Assets\Letters\Scripts\Choose\LevelChooseStart.cs" />
@@ -90,17 +91,19 @@
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\Creator\CoordCalculator.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\Creator\LetterCreator.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\EvaporateHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterAudio.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterButton.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterClickDetector.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterEventHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterImageController.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterSound.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterSprites.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LettersContainer.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Level1Beginning.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\CreateLetter.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\DragHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\FinishLevel2.cs" />
-    <Compile Include="Assets\Letters\Scripts\Level2\FireworksController.cs" />
+    <Compile Include="Assets\Letters\Scripts\Level2\Fireworks\FireworksController.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\LetterImageColor.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\Level2Beginning.cs" />
     <Compile Include="Assets\Letters\Scripts\Level2\NameValidator.cs" />

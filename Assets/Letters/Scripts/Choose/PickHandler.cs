@@ -8,11 +8,14 @@ using UnityEngine.UI;
 public class PickHandler : MonoBehaviour, IPointerClickHandler {
     public Sprite Default;
     public Sprite OnClick;
+    public AudioClip Pick;
+    private AudioSource _source;
 
     private int _number;
 
     void Start()
     {
+        _source = GetComponent<AudioSource>();
         _number = 0;
     }
 
@@ -20,6 +23,7 @@ public class PickHandler : MonoBehaviour, IPointerClickHandler {
     {
         gameObject.GetComponent<Image>().sprite = OnClick;
         Invoke("SetDefaultSprite", 0.3f);
+        _source.PlayOneShot(Pick);
         SpawnLetter();
     }
 

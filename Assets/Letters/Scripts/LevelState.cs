@@ -48,7 +48,7 @@ public class LevelState : MonoBehaviour {
 
     public void SwapItems()
     {
-        StartCoroutine(swapTrigger(.2f));
+        StartCoroutine(swapTrigger(.5f));
     }
 
     private IEnumerator swapTrigger(float sec)

@@ -25,11 +25,6 @@ public class ButtonController : MonoBehaviour {
     public void OnClick()
     {
         if(isActive)
-        {
-            // Save choosen name to storage
-            GameObject.Find("/Canvas/Panel/Choosen").GetComponent<NameValidator>().SaveNewName();
-
             SceneManager.LoadScene(1);
-        }
     }
 }

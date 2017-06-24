@@ -8,10 +8,13 @@ using UnityEngine;
 public class SwapHandler : MonoBehaviour {
 
     private SwapItems _swap;
+    public AudioClip SwapSound;
+    private AudioSource _audioSource;
 
 	// Use this for initialization
 	void Awake () {
         _swap = new SwapItems();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void SwapTrigger()
@@ -22,6 +25,8 @@ public class SwapHandler : MonoBehaviour {
         UtilsList listHelper = new UtilsList();
         children = listHelper.ShuffleList<Transform>(children);
         _swap.SwapTransformsRandomly(children);
+
+        playSwapAudio();
     }
 
     private List<Transform> getChildren()
@@ -34,5 +39,10 @@ public class SwapHandler : MonoBehaviour {
         }
                 
         return children;
+    }
+
+    private void playSwapAudio()
+    {
+        _audioSource.PlayOneShot(SwapSound);
     }
 }

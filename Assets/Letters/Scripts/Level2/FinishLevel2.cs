@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FinishLevel2 : MonoBehaviour {
+    public AudioClip _winSound;
+
     public void FinishLevel()
     {
         var panel = GameObject.FindGameObjectWithTag("MainPanel");
@@ -12,6 +14,9 @@ public class FinishLevel2 : MonoBehaviour {
         var fireworksObject = GameObject.FindGameObjectWithTag("Fireworks");
         fireworksObject.GetComponent<FireworksController>().StartFireworks();
         var quitButton = fireworksObject.transform.Find("Quit");
+
+        AudioMaster audioMaster = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioMaster>();
+        audioMaster.PlayNewAudio(_winSound);
 
         StartCoroutine(spawnQuitButton(quitButton, 2f));
     }

@@ -39,6 +39,7 @@ namespace Choose
             else
             {
                 _gameObjects.Add(gObject);
+                saveNewName();
                 handleContinueButton();
             }
         }
@@ -47,6 +48,7 @@ namespace Choose
         {
             if (_gameObjects.Count > 0) {
                 _gameObjects.Remove(gObject);
+                saveNewName();
                 handleContinueButton();
             }
             else
@@ -58,7 +60,7 @@ namespace Choose
             GameObject.Find("/Canvas/Panel/Continue/Button").GetComponent<ButtonCharm>().ButtonChanges(_gameObjects.Count);
         }
 
-        public void SaveNewName()
+        public void saveNewName()
         {
             var nameList = new List<string>();
             foreach(var i in _gameObjects)

@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LetterFind;
 
 public class LetterButton : MonoBehaviour {
     Button myButton;
-
     private LetterClickDetector _letterClickDetector;
     private LetterImageController _imageController;
     private LevelState _levelState;
+    private LetterAudio _letterAudio;
+
     private bool isTriggered;
     private bool letterInProcess = false;
 
@@ -25,6 +27,8 @@ public class LetterButton : MonoBehaviour {
         _levelState = resultEventHandler.GetComponent<LevelState>();
 
         _imageController = gameObject.GetComponent<LetterImageController>();
+
+        _letterAudio = GetComponent<LetterAudio>();
     }	
     
     public int GetLetterState()
@@ -35,8 +39,9 @@ public class LetterButton : MonoBehaviour {
     private void onClickEvent()
     {
         // Prevent correct letters that have been picket to be changed
-        if (myButton != null && _imageController.GetLetterState() != 1)
+        if (myButton != null && _imageController.GetLetterState() != 1) {
             processAction(0, true);
+        }
     }
     
     /// <summary>
@@ -48,6 +53,7 @@ public class LetterButton : MonoBehaviour {
     private void processAction(float delayTimer, bool pick)
     {
         var result = processLetterTouched();
+        playSoundOnClick(result);
 
         StartCoroutine(pickLetterWithDelay(delayTimer, result));
 
@@ -68,10 +74,18 @@ public class LetterButton : MonoBehaviour {
     {
         var result = letterTouched();
         if (result.Status == 0)
-        {
             reverseTrigger();
-        }
         return result;
+    }
+
+    private void playSoundOnClick(Result result)
+    {
+        if(result.Action == "PICK") {
+            if (result.isCorrectLetter && result.isTriggeredLetter)
+                _letterAudio.PlayCorrectLetterClick();
+            else
+                _letterAudio.PlayWrongLetterClick();
+        }
     }
 
 

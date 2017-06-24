@@ -6,6 +6,14 @@ using UnityEngine.EventSystems;
 using Level2;
 
 public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler {
+    private AudioSource _source;
+    public AudioClip OnDropSound;
+    public AudioClip RemoveItemSound;
+
+    void Start()
+    {
+        _source = GetComponent<AudioSource>();
+    }
 
     public GameObject item
     {
@@ -23,8 +31,16 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler {
             DragHandler.itemBeingDragged.transform.SetParent(transform);
 
             if (transform.parent.name == "Slots")
+            {
+                _source.PlayOneShot(OnDropSound);
                 validateName();
+            }
         }
+    }
+
+    public void playOnDropSound()
+    {
+
     }
 
     private void validateName()
@@ -40,6 +56,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler {
         {
             var newParentObject = GameObject.Find(item.transform.GetComponent<DragHandler>().SpawnParentPath);       
             item.transform.SetParent(newParentObject.transform);
+            _source.PlayOneShot(RemoveItemSound);
         }
     }
 }

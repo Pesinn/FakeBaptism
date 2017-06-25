@@ -9,7 +9,7 @@ public class Level1Beginning : MonoBehaviour {
     private StoreHandler _storeHandler;
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
         _storeHandler = new StoreHandler();
         spawnLetters();
@@ -46,7 +46,7 @@ public class Level1Beginning : MonoBehaviour {
 
     private List<string> createRandomletters()
     {
-        var lettersCount = _letterCreator.GetMaximumLettersCount();
+        var lettersCount = 66;
 
         var randomLettersCount = lettersCount - getCorrectNameWithoutWhitespaces().Count;
 

@@ -12,7 +12,7 @@ namespace LetterFind
 
         void Start()
         {
-            _audioSource = GetComponent<AudioSource>();
+            _audioSource = GameObject.FindGameObjectWithTag("MainPanel").GetComponent<AudioSource>();
         }
 
         public void PlayWrongLetterClick()

@@ -94,7 +94,6 @@
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterCreator.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterEventHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterImageController.cs" />
-    <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterSound.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LetterSprites.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Letters\LettersContainer.cs" />
     <Compile Include="Assets\Letters\Scripts\Level1\Level1Beginning.cs" />

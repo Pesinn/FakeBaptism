@@ -14,11 +14,16 @@ public class LetterCreator : MonoBehaviour {
 
     public void SpawnLetters(List<string> letters)
     {
-        foreach(var i in letters)
+        StartCoroutine(spawnLetterDelay(letters, 0.025f));
+    }
+
+    private IEnumerator spawnLetterDelay(List<string> letters, float sec)
+    {
+        foreach (var i in letters)
         {
-            Debug.Log(i);
-            var sprites = _letterSprites.GetSprite(i);
-            spawnLetter(i, sprites);
+            var sprite = _letterSprites.GetSprite(i);
+            spawnLetter(i, sprite);
+            yield return new WaitForSeconds(sec);
         }
     }
 

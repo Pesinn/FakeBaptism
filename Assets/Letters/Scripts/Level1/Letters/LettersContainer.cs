@@ -82,6 +82,7 @@ public class LettersContainer
         if (_choosenLetters.Contains(letter))
         {
             _choosenLetters.Remove(letter);
+            _correctChoosenLetters.Remove(letter);
             _containerStatus.Status = 0;
         }
         else

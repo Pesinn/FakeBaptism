@@ -88,10 +88,17 @@ public class LetterButton : MonoBehaviour {
         }
     }
 
+    public void CorrectLetterReversed()
+    {
+        var result = letterTouched();
+        processAction(1f, false);
+        reverseTrigger();
+    }
 
     private Result letterTouched()
     {
         LetterAction letterAction;
+
         if (!isTriggered)
             letterAction = new PickLetter(myButton.name);
         else
@@ -114,6 +121,7 @@ public class LetterButton : MonoBehaviour {
         if (_levelState.GetWrongCounter() >= 3) {
             _levelState.SwapItems();
             _levelState.ResetWrongCounter();
+            _levelState.UnpickRandomCorrectlyPicked();
         }
     }
 

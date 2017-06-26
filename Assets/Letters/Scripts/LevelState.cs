@@ -10,11 +10,13 @@ public class LevelState : MonoBehaviour {
 
     private SwapHandler _swapHandler;
     private FinishLevel _finishLevel;
+    private LetterReader _letterReader;
     private int isWrongLetterCounter;
 
 	// Use this for initialization
 	void Start () {
         _swapHandler = GameObject.FindGameObjectWithTag("MainPanel").GetComponent<SwapHandler>();
+        _letterReader = GameObject.FindGameObjectWithTag("MainPanel").GetComponent<LetterReader>();
         _finishLevel = GameObject.FindGameObjectWithTag("ResultsEventHandler").GetComponent<FinishLevel>();
         isWrongLetterCounter = 0;
     }
@@ -49,6 +51,11 @@ public class LevelState : MonoBehaviour {
     public void SwapItems()
     {
         StartCoroutine(swapTrigger(.5f));
+    }
+
+    public void UnpickRandomCorrectlyPicked()
+    {
+        _letterReader.UnpickRandomCorrectlyPicked();
     }
 
     private IEnumerator swapTrigger(float sec)

@@ -81,8 +81,10 @@ public class LettersContainer
 
         if (_choosenLetters.Contains(letter))
         {
+            if(correctLetterSouldBeRemoved(letter))
+                _correctChoosenLetters.Remove(letter);
+
             _choosenLetters.Remove(letter);
-            _correctChoosenLetters.Remove(letter);
             _containerStatus.Status = 0;
         }
         else
@@ -113,6 +115,24 @@ public class LettersContainer
                 _containerStatus.InnerText = "The letter has already been choosen";
             }
         }
+    }
+
+    /// <summary>
+    /// Checks if letter should be removed from correctChoosenLetters list
+    /// when unpicking letter. This check should be done before any letter
+    /// is removed from any list.
+    /// </summary>
+    /// <param name="letter">Letter to remove</param>
+    /// <returns>True is letter should be removed from _correctChoosenLetters list</returns>
+    private bool correctLetterSouldBeRemoved(string letter)
+    {
+        var correctLetterCounter = _correctChoosenLetters.Where(x => x.Contains(letter)).Count();
+
+        var choosenLetterCounter = _choosenLetters.Where(x => x.Contains(letter)).Count();
+
+        if (choosenLetterCounter > correctLetterCounter)
+            return false;
+        return true;
     }
 
     private void processWrongLetter(string letter)

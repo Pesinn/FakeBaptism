@@ -5,16 +5,19 @@ using UnityEngine;
 public class LetterReader : MonoBehaviour {
     public void UnpickRandomCorrectlyPicked()
     {
-        var transform = findRandomlyAlreadyPicked();
+        var transforms = findRandomlyAlreadyPicked();
 
-        Debug.Log(transform.name);
+        if (transforms.Count > 0)
+        {
+            var randomlyPickedTransform = pickRandomObject(transforms);
 
-        var letterButton = transform.GetComponent<LetterButton>();
+            var letterButton = randomlyPickedTransform.GetComponent<LetterButton>();
 
-        letterButton.CorrectLetterReversed();
+            letterButton.CorrectLetterReversed();
+        }
     }
 
-    private Transform findRandomlyAlreadyPicked()
+    private List<Transform> findRandomlyAlreadyPicked()
     {
         var children = getChildren();
 
@@ -24,14 +27,17 @@ public class LetterReader : MonoBehaviour {
         {
             var gameObject = i.GetComponent<LetterButton>();
             if (gameObject.GetLetterState() == 1)
-            {
                 alreadyPicked.Add(i);
-            }
         }
 
-        var random = Random.Range(0, alreadyPicked.Count);
+        return alreadyPicked;
+    }
 
-        return alreadyPicked[random];
+    private Transform pickRandomObject(List<Transform> objects)
+    {
+        var random = Random.Range(0, objects.Count);
+
+        return objects[random];
     }
 
 

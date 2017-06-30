@@ -119,6 +119,7 @@
     <Compile Include="Assets\Letters\Scripts\Utils\UtilsList.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Font\LICENSE.txt" />
     <None Include="Assets\HD-2D Background Art Wonderland\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

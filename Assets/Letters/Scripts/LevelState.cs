@@ -50,11 +50,17 @@ public class LevelState : MonoBehaviour {
 
     public void SwapItems()
     {
-        StartCoroutine(swapTrigger(.5f));
+        StartCoroutine(swapTrigger(.4f));
     }
 
     public void UnpickRandomCorrectlyPicked()
     {
+        StartCoroutine(unpick(.5f));
+    }
+
+    private IEnumerator unpick(float sec)
+    {
+        yield return new WaitForSeconds(sec);
         _letterReader.UnpickRandomCorrectlyPicked();
     }
 

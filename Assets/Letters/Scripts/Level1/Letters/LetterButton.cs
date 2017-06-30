@@ -59,7 +59,7 @@ public class LetterButton : MonoBehaviour {
 
         if (!result.isTriggeredLetter && pick)
         {
-            StartCoroutine(processActionFromRecursion(0.5f, false));
+            StartCoroutine(processActionFromRecursion(0.1f, false));
         }
     }
 
@@ -88,11 +88,14 @@ public class LetterButton : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// When letter is already picket, and is correct
+    /// it can be unpicked using this function.
+    /// </summary>
     public void CorrectLetterReversed()
     {
-        var result = letterTouched();
-        processAction(1f, false);
-        reverseTrigger();
+        isTriggered = true;
+        processAction(0f, false);
     }
 
     private Result letterTouched()

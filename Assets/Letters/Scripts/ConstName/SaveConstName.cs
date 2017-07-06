@@ -9,7 +9,7 @@ public class SaveConstName : MonoBehaviour {
 	void Start () {
         _storeHandler = new StoreHandler();
 
-        _storeHandler.SaveName("PEZ MAN");
+        _storeHandler.SaveName("MIKKI REFUR");
 
         SceneManager.LoadScene(1);
     }

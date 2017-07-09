@@ -8,7 +8,7 @@ namespace Choose
 
         private List<GameObject> _gameObjects;
         private NameLetterStorage _storeHandler;
-        private const int MAX = 33;
+        private const int MAX = 27;
 
         void Start()
         {

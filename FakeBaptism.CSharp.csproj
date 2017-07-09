@@ -114,6 +114,8 @@
     <Compile Include="Assets\Letters\Scripts\Result.cs" />
     <Compile Include="Assets\Letters\Scripts\Services\StoreHandler.cs" />
     <Compile Include="Assets\Letters\Scripts\SwapHandler.cs" />
+    <Compile Include="Assets\Letters\Scripts\Utils\EnableGameObject.cs" />
+    <Compile Include="Assets\Letters\Scripts\Utils\GameObjectController.cs" />
     <Compile Include="Assets\Letters\Scripts\Utils\IUtilsList.cs" />
     <Compile Include="Assets\Letters\Scripts\Utils\SwapItems.cs" />
     <Compile Include="Assets\Letters\Scripts\Utils\UtilsList.cs" />

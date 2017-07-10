@@ -46,7 +46,7 @@ public class Level1Beginning : MonoBehaviour {
 
     private List<string> createRandomletters()
     {
-        var lettersCount = 66;
+        var lettersCount = 60;
 
         var randomLettersCount = lettersCount - getCorrectNameWithoutWhitespaces().Count;
 

@@ -17,13 +17,5 @@ public class FinishLevel2 : MonoBehaviour {
 
         AudioMaster audioMaster = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioMaster>();
         audioMaster.PlayNewAudio(_winSound);
-
-        StartCoroutine(spawnQuitButton(quitButton, 2f));
-    }
-
-    private IEnumerator spawnQuitButton(Transform button, float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        button.gameObject.SetActive(true);
     }
 }

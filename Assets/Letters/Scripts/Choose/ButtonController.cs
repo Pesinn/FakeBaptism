@@ -25,6 +25,6 @@ public class ButtonController : MonoBehaviour {
     public void OnClick()
     {
         if(isActive)
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
     }
 }
